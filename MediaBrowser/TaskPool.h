@@ -10,6 +10,8 @@
 #ifndef MEDIA_BROWSER_TASK_POOL_H
 #define MEDIA_BROWSER_TASK_POOL_H
 
+#include <boost/noncopyable.hpp>
+
 #include <deque>
 
 #include <QList>
