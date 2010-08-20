@@ -1,0 +1,29 @@
+# ignore file for Qt projects
+syntax: glob
+obj
+moc_*
+qrc_*
+*.o
+*.a
+*.xcodeproj
+build
+**/*.qm
+Makefile*
+release
+debug
+obj
+*.pro.user
+qtc-gdbmacros
+*.prl
+*.gch
+*.app
+
+# ignore other libraries
+syntax: glob
+taglib
+boost
+
+# ignore subversion, mac stuff, and emacs stuff
+*svn*
+.DS_Store
+*~

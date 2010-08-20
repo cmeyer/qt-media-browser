@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/MediaBrowser">
+        <file alias="CancelButton.png">Images/CancelButton.png</file>
+        <file alias="CancelButton-dark.png">Images/CancelButton-dark.png</file>
+        <file alias="MagnifyingGlass.png">Images/MagnifyingGlass.png</file>
+        <file alias="PlayButton.png">Images/PlayButton.png</file>
+        <file alias="PlayButton-dark.png">Images/PlayButton-dark.png</file>
+        <file alias="PauseButton.png">Images/PauseButton.png</file>
+        <file alias="PauseButton-dark.png">Images/PauseButton-dark.png</file>
+    </qresource>
+</RCC>

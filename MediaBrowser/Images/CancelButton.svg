@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="128" height="128">
+
+<style type="text/css" media="all">
+
+.color { fill:#444; stroke:#444; }
+
+</style>
+
+     <defs>
+
+     <g id="cancel_button">
+       <circle cx="51" cy="51" r="44" />
+       <g transform="translate(51,51) rotate(45) translate(-51,-51)">
+         <path d="M 45,23 L 45,79 L 57,79 L 57,23 z" stroke="white" fill="white" />
+       </g>
+       <g transform="translate(51,51) rotate(-45) translate(-51,-51)">
+         <path d="M 45,23 L 45,79 L 57,79 L 57,23 z" stroke="white" fill="white" />
+       </g>
+     </g>
+
+   </defs>
+
+<!--
+
+java -jar batik-rasterizer.jar -h 16 -w 16 -a 0,0,16,16 CancelButton.svg -d CancelButton.png
+
+-->
+
+<g transform="scale(0.154)">
+   <use x="0" y="0" xlink:href="#cancel_button" class="color" />
+</g>
+
+</svg>
