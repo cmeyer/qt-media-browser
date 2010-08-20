@@ -11,6 +11,7 @@
 #define MEDIA_BROWSER_TASK_POOL_H
 
 #include <boost/noncopyable.hpp>
+#include <boost/smart_ptr.hpp>
 
 #include <deque>
 
