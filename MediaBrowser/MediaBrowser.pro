@@ -83,8 +83,8 @@ macx {
         CONFIG += precompile_header
     }
 
-    INCLUDEPATH += /Users/cmeyer/Developer/Qt/qt-mobility/install/include/QtMultimediaKit
-    INCLUDEPATH += /Users/cmeyer/Developer/Qt/qt-mobility/install/include/QtMobility
+    INCLUDEPATH += ../qt-mobility/install/include/QtMultimediaKit
+    INCLUDEPATH += ../qt-mobility/install/include/QtMobility
 }
 
 win32 {

@@ -22,6 +22,7 @@ qtc-gdbmacros
 syntax: glob
 taglib
 boost
+qt-mobility
 
 # ignore subversion, mac stuff, and emacs stuff
 *svn*

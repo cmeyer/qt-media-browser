@@ -111,7 +111,7 @@ macx {
         #QMAKE_MAC_SDK=/Developer/SDKs/MacOSX10.4u.sdk
         CONFIG+=x86 ppc
     }
-    QMAKE_LFLAGS += -F/Users/cmeyer/Developer/Qt/qt-mobility/install/Library/Frameworks
+    QMAKE_LFLAGS += -F../qt-mobility/install/Library/Frameworks
     LIBS += -framework QtMultimediaKit
 }
 
