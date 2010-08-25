@@ -89,9 +89,9 @@ macx {
         LINKLIBDIR = release
     }
     LINKLIBS += \
-        ../MediaBrowser/build/$$LINKLIBDIR/libMediaBrowser.a \
         ../taglib/taglib/build/$$LINKLIBDIR/libTagLib.a
     POST_TARGETDEPS += $$LINKLIBS
+    LIBS += -F../MediaBrowser/build/$$LINKLIBDIR -framework MediaBrowser -framework QtMultimediaKit
     LIBS += $$LINKLIBS -framework QuickTime -framework Carbon -framework Cocoa -framework CoreFoundation
     QMAKE_CFLAGS_WARN_ON = -Wreturn-type  -Wunused-variable
     QMAKE_CXXFLAGS_WARN_ON = -Wreturn-type -Wunused-variable
@@ -111,7 +111,6 @@ macx {
         #QMAKE_MAC_SDK=/Developer/SDKs/MacOSX10.4u.sdk
         CONFIG+=x86 ppc
     }
-    QMAKE_LFLAGS += -F../qt-mobility/install/Library/Frameworks
     LIBS += -framework QtMultimediaKit
 }
 

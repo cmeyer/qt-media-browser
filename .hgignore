@@ -17,12 +17,13 @@ qtc-gdbmacros
 *.prl
 *.gch
 *.app
+config.pri
 
 # ignore other libraries
 syntax: glob
 taglib
 boost
-qt-mobility
+qt-mobility*
 
 # ignore subversion, mac stuff, and emacs stuff
 *svn*

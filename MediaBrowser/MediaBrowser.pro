@@ -1,5 +1,7 @@
+include(../config.pri)
+
 TEMPLATE = lib
-CONFIG += staticlib no_keywords stl
+CONFIG += no_keywords stl
 QT += xmlpatterns xml
 INCLUDEPATH += ../boost ..
 INCLUDEPATH += ../taglib/include
@@ -7,6 +9,8 @@ DEPENDPATH += ../boost
 DEFINES += TAGLIB_STATIC=1 # necessary to avoid linker errors
 DEFINES += USE_TAGLIB=1
 DEFINES += LQ_BUILD_QT=1
+
+CONFIG += debug_and_release build_all
 
 SOURCES += \
     FolderParser.cpp \
@@ -48,9 +52,49 @@ HEADERS += \
     TaskGroup.h \
     TaskPool.h \
 
+# see http://www.qtcentre.org/threads/30564-What-Does-qtLibraryTarget()-Do
+defineReplace(qtLibraryTarget) {
+   unset(LIBRARY_NAME)
+   LIBRARY_NAME = $$1
+   mac:!static:contains(QT_CONFIG, qt_framework) {
+      QMAKE_FRAMEWORK_BUNDLE_NAME = $$LIBRARY_NAME
+      export(QMAKE_FRAMEWORK_BUNDLE_NAME)
+   }
+   contains(TEMPLATE, .*lib):CONFIG(debug, debug|release) {
+      !debug_and_release|build_pass {
+          mac:RET = $$member(LIBRARY_NAME, 0)_debug
+          else:win32:RET = $$member(LIBRARY_NAME, 0)d
+      }
+   }
+   isEmpty(RET):RET = $$LIBRARY_NAME
+   return($$RET)
+}
+
+TARGET = $$qtLibraryTarget(MediaBrowser)
+
 macx {
     DEFINES += MAC_OS_X_VERSION_MIN_REQUIRED=1040
     #DEFINES += MAC_OS_X_VERSION_MAX_ALLOWED=1040
+
+    CONFIG += lib_bundle
+
+    CONFIG(debug, debug|release) {
+        LINKLIBDIR = debug
+    }
+    CONFIG(release, debug|release) {
+        LINKLIBDIR = release
+    }
+
+    LINKLIBS += \
+        ../taglib/taglib/build/$$LINKLIBDIR/libTagLib.a
+
+    LIBS += $$LINKLIBS -framework Cocoa
+    LIBS += -framework QtMultimediaKit
+
+    FRAMEWORK_HEADERS.version = Versions
+    FRAMEWORK_HEADERS.files = MediaBrowserView.h MusicBrowserView.h PhotoBrowserView.h
+    FRAMEWORK_HEADERS.path = Headers
+    QMAKE_BUNDLE_DATA += FRAMEWORK_HEADERS
 
     OBJECTIVE_SOURCES = MacUtility.mm
     SOURCES += \
@@ -69,26 +113,31 @@ macx {
     QMAKE_CFLAGS += -x objective-c++
 
     CONFIG(release, debug|release) {
-        OBJECTS_DIR = obj/release
-        DESTDIR = build/release
+        OBJECTS_DIR = build/release/.obj
+        DESTDIR = build/lib # same DESTDIR for both debug and release to get both versions in the same directory
+        PRECOMPILED_HEADER = MediaBrowser_pch.h
         QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.4
         #QMAKE_MAC_SDK=/Developer/SDKs/MacOSX10.4u.sdk
         CONFIG+=x86 ppc
     }
 
     CONFIG(debug, debug|release) {
-        OBJECTS_DIR = obj/debug
-        DESTDIR = build/debug
+        OBJECTS_DIR = build/debug/.obj
+        DESTDIR = build/lib # same DESTDIR for both debug and release to get both versions in the same directory
         PRECOMPILED_HEADER = MediaBrowser_pch.h
         CONFIG += precompile_header
     }
 
     INCLUDEPATH += ../qt-mobility/install/include/QtMultimediaKit
     INCLUDEPATH += ../qt-mobility/install/include/QtMobility
+
+    target.path = $${MBP_PREFIX}
+    INSTALLS += target
 }
 
 win32 {
     win32-msvc2008 {
+        CONFIG += staticlib
         DEFINES += BOOST_ALL_NO_LIB
         QMAKE_CXXFLAGS_WARN_ON = -w44100
     }
