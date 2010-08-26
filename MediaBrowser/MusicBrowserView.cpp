@@ -160,6 +160,9 @@ MusicBrowserView::MusicBrowserView(QWidget *parent)
     QTextStream ss(&style_sheet);
     ss << "* QLineEdit { selection-color: white; border: 2px groove gray; border-radius: 10px; padding: 0px 20px 0px 20px; }";
     ss << "* QToolButton { border: 2px groove gray; border-radius: 10px; padding: 0px 3px 0px 5px; }";
+    ss << "* QTreeView#music { font: 11px; color: black; } ";
+    ss << "* QTreeView#music::item { padding-top: 1px; padding-bottom: 1px; border: 1px solid #EEE; border-top-color: transparent; border-bottom-color: transparent; } ";
+    ss << "* QTreeView#music::item:selected { color: palette(highlighted-text); background-color: palette(highlight); border: 1px solid palette(highlight); }";
     setStyleSheet(style_sheet);
 
     QWidget *search_box = new QWidget();
@@ -195,7 +198,9 @@ MusicBrowserView::MusicBrowserView(QWidget *parent)
     setMediaListModel(m_music_list_model);
 
     m_music_list_view = new MusicBrowserTreeView(m_music_list_model, m_proxy_music_list_model);
+    m_music_list_view->setObjectName("music");
     m_music_list_view->setRootIsDecorated(false);
+    m_music_list_view->setAlternatingRowColors(true);
     m_music_list_view->setSelectionMode(QAbstractItemView::ExtendedSelection);
     m_music_list_view->setDragDropMode(QTreeView::DragOnly);
     m_music_list_view->setDragEnabled(true);
