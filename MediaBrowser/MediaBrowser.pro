@@ -97,10 +97,12 @@ macx {
     QMAKE_BUNDLE_DATA += FRAMEWORK_HEADERS
 
     OBJECTIVE_SOURCES = MacUtility.mm
+
     SOURCES += \
         ApertureLibraryParser.cpp \
         iPhotoLibraryParser.cpp \
         iTunesLibraryParser.cpp
+
     HEADERS += \
         ApertureLibraryParser.h \
         iPhotoLibraryParser.h \
@@ -183,7 +185,7 @@ TRANSLATIONS += \
     TSQM.input = TRANSLATIONS
     TSQM.output = $$TS_DIR/${QMAKE_FILE_BASE}.qm
     TSQM.commands = $$QMAKE_LRELEASE ${QMAKE_FILE_IN}
-    TSQM.CONFIG = no_link
+    TSQM.CONFIG = no_link target_predeps
     QMAKE_EXTRA_COMPILERS += TSQM
     PRE_TARGETDEPS += compiler_TSQM_make_all
     } else:message(No translation files in project)
