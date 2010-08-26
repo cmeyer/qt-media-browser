@@ -143,6 +143,23 @@ win32 {
     }
 }
 
+macx {
+    LOCALIZATIONS.path = Localizations
+    LOCALIZATIONS.files += \
+        Localizations/MediaBrowser_da.qm \
+        Localizations/MediaBrowser_de.qm \
+        Localizations/MediaBrowser_es.qm \
+        Localizations/MediaBrowser_fi.qm \
+        Localizations/MediaBrowser_fr.qm \
+        Localizations/MediaBrowser_it.qm \
+        Localizations/MediaBrowser_ja.qm \
+        Localizations/MediaBrowser_nl.qm \
+        Localizations/MediaBrowser_no.qm \
+        Localizations/MediaBrowser_sv.qm \
+        Localizations/MediaBrowser_zh.qm
+    QMAKE_BUNDLE_DATA += LOCALIZATIONS
+}
+
 TRANSLATIONS += \
     Localizations/MediaBrowser_da.ts \
     Localizations/MediaBrowser_de.ts \
