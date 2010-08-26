@@ -92,7 +92,7 @@ macx {
     LIBS += -framework QtMultimediaKit
 
     FRAMEWORK_HEADERS.version = Versions
-    FRAMEWORK_HEADERS.files = MediaBrowserView.h MusicBrowserView.h PhotoBrowserView.h
+    FRAMEWORK_HEADERS.files = MediaBrowser.h MediaBrowserView.h MusicBrowserView.h PhotoBrowserView.h
     FRAMEWORK_HEADERS.path = Headers
     QMAKE_BUNDLE_DATA += FRAMEWORK_HEADERS
 
