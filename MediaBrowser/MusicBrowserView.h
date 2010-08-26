@@ -30,9 +30,6 @@ private Q_SLOTS:
     void textChanged(const QString &text);
 
     // argh. can't Qt just handle pressed buttons properly?
-    void cancelPressed();
-    void cancelReleased();
-    void cancelClicked();
     void playPressed();
 
 private:
@@ -43,7 +40,6 @@ private:
     QString m_current_file_path;
     QLineEdit *m_search_field;
     QToolButton *m_play_button;
-    QToolButton *m_cancel_search_button;
 };
 
 class MusicBrowserTreeView : public QTreeView
@@ -61,6 +57,31 @@ Q_SIGNALS:
 private:
     MusicListModel *m_music_list_model;
     QSortFilterProxyModel *m_proxy_music_list_model;
+};
+
+#include <QLineEdit>
+
+class SearchLineEdit : public QLineEdit
+{
+    Q_OBJECT
+public:
+    SearchLineEdit(const QString &default_str, QWidget *parent = nil);
+    virtual void paintEvent(QPaintEvent *event);
+    virtual void mousePressEvent(QMouseEvent *event);
+    virtual void mouseReleaseEvent(QMouseEvent *event);
+    virtual void keyPressEvent(QKeyEvent *event);
+private Q_SLOTS:
+    void textChanged(const QString &text);
+private:
+    QString m_default_str;
+    enum { STATE_HIDDEN, STATE_VISIBLE_NORMAL, STATE_VISIBLE_DOWN };
+    int m_state;
+
+    // images
+    QImage m_magnifying_glass_image;
+    QImage m_cancel_button_image;
+    QImage m_cancel_button_dark_image;
+    QRect cancelButtonRect();
 };
 
 #endif // MEDIA_BROWSER_MUSIC_BROWSER_VIEW_H

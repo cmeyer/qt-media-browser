@@ -80,6 +80,76 @@ public:
     }
 };
 
+#include <QPainter>
+
+SearchLineEdit::SearchLineEdit(const QString &default_str, QWidget *parent)
+    : QLineEdit(parent), m_default_str(default_str), m_state(SearchLineEdit::STATE_HIDDEN)
+{
+    connect(this, SIGNAL(textChanged(QString)), this, SLOT(textChanged(QString)));
+
+    m_magnifying_glass_image.load(":/MediaBrowser/MagnifyingGlass.png");
+    m_cancel_button_image.load(":/MediaBrowser/CancelButton.png");
+    m_cancel_button_dark_image.load(":/MediaBrowser/CancelButton-dark.png");
+}
+
+QRect SearchLineEdit::cancelButtonRect()
+{
+    QRect pr = rect();
+    QRect r = m_cancel_button_image.rect();
+    r.moveCenter(QPoint(pr.right() - 4 - r.width()/2, pr.center().y()));
+    return r;
+}
+
+void SearchLineEdit::paintEvent(QPaintEvent *event)
+{
+    QLineEdit::paintEvent(event);
+
+    QPainter p(this);
+    QRect pr = rect();
+
+    {
+        QRect r = m_magnifying_glass_image.rect();
+        r.moveCenter(QPoint(pr.left() + 4 + r.width()/2, pr.center().y()));
+        p.drawImage(r, m_magnifying_glass_image);
+    }
+
+    if (m_state != SearchLineEdit::STATE_HIDDEN)
+    {
+        p.drawImage(cancelButtonRect(), (m_state == SearchLineEdit::STATE_VISIBLE_NORMAL) ? m_cancel_button_image : m_cancel_button_dark_image);
+    }
+}
+
+void SearchLineEdit::textChanged(const QString &text)
+{
+    m_state = text.isEmpty() ? SearchLineEdit::STATE_HIDDEN : SearchLineEdit::STATE_VISIBLE_NORMAL;
+}
+
+void SearchLineEdit::mousePressEvent(QMouseEvent *event)
+{
+    if (cancelButtonRect().contains(event->pos()) && !text().isEmpty())
+    {
+        m_state = SearchLineEdit::STATE_VISIBLE_DOWN;
+        update();
+    }
+    QLineEdit::mousePressEvent(event);
+}
+
+void SearchLineEdit::mouseReleaseEvent(QMouseEvent *event)
+{
+    if (cancelButtonRect().contains(event->pos()))
+        setText(QString());
+    m_state = text().isEmpty() ? SearchLineEdit::STATE_HIDDEN : SearchLineEdit::STATE_VISIBLE_NORMAL;
+    update();
+    QLineEdit::mouseReleaseEvent(event);
+}
+
+void SearchLineEdit::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Escape)
+        setText(QString());
+    else
+        QLineEdit::keyPressEvent(event);
+}
 
 MusicBrowserView::MusicBrowserView(QWidget *parent)
     : MediaBrowserView(parent)
@@ -88,7 +158,7 @@ MusicBrowserView::MusicBrowserView(QWidget *parent)
 {
     QString style_sheet;
     QTextStream ss(&style_sheet);
-    ss << "* QLineEdit { selection-color: white; border: 2px groove gray; border-radius: 10px; padding: 0px 4px; }";
+    ss << "* QLineEdit { selection-color: white; border: 2px groove gray; border-radius: 10px; padding: 0px 20px 0px 20px; }";
     //ss << "* QLineEdit:focus { selection-color: white; border: 2px groove gray; border-radius: 10px; padding: 0px 4px; }";
     //ss << "* QLineEdit:edit-focus { selection-color: white; border: 2px groove gray; border-radius: 10px; padding: 0px 4px; }";
     //ss << "* QPushButton { min-width: 16px; max-width: 16px; min-height: 16px; max-height: 16px; border: 0px; }";
@@ -100,7 +170,7 @@ MusicBrowserView::MusicBrowserView(QWidget *parent)
     search_box_layout->setContentsMargins(12, 2, 12, 2);
     search_box_layout->setSpacing(2);
 
-    m_search_field = new QLineEdit();
+    m_search_field = new SearchLineEdit(tr("Search..."));
     //m_search_field->setPlaceholderText(tr("Search..."));
     m_search_field->setStyle(new NoFocusStyle());
     m_search_field->adjustSize();
@@ -110,21 +180,9 @@ MusicBrowserView::MusicBrowserView(QWidget *parent)
     m_play_button->setMinimumHeight(m_search_field->height());
     m_play_button->hide();
 
-    QLabel *search_box_label = new QLabel();
-    search_box_label->setPixmap(QPixmap(":/MediaBrowser/MagnifyingGlass.png"));
-    search_box_label->setMinimumHeight(m_search_field->height());
-
-    m_cancel_search_button = new QToolButton();
-    m_cancel_search_button->setIcon(QIcon(":/MediaBrowser/CancelButton.png"));
-    m_cancel_search_button->setMinimumHeight(m_search_field->height());
-    m_cancel_search_button->adjustSize();
-    m_cancel_search_button->setIcon(QIcon());
-
     search_box_layout->addWidget(m_play_button);
     search_box_layout->addSpacerItem(new QSpacerItem(4, 4, QSizePolicy::Expanding, QSizePolicy::Minimum));
-    search_box_layout->addWidget(search_box_label);
     search_box_layout->addWidget(m_search_field);
-    search_box_layout->addWidget(m_cancel_search_button);
 
     m_layout->addWidget(search_box);
 
@@ -154,9 +212,6 @@ MusicBrowserView::MusicBrowserView(QWidget *parent)
     connect(m_search_field, SIGNAL(textChanged(QString)), this, SLOT(textChanged(QString)));
     connect(m_music_list_view->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(selectionChanged(QItemSelection,QItemSelection)));
 
-    connect(m_cancel_search_button, SIGNAL(clicked()), this, SLOT(cancelClicked()));
-    connect(m_cancel_search_button, SIGNAL(pressed()), this, SLOT(cancelPressed()));
-    connect(m_cancel_search_button, SIGNAL(released()), this, SLOT(cancelReleased()));
     connect(m_play_button, SIGNAL(pressed()), this, SLOT(playPressed()));
 }
 
@@ -166,21 +221,6 @@ void MusicBrowserView::playPressed()
         m_play_button->setIcon(QIcon(":/MediaBrowser/PauseButton-dark.png"));
     else
         m_play_button->setIcon(QIcon(":/MediaBrowser/PlayButton-dark.png"));
-}
-
-void MusicBrowserView::cancelPressed()
-{
-    m_cancel_search_button->setIcon(QIcon(":/MediaBrowser/CancelButton-dark.png"));
-}
-
-void MusicBrowserView::cancelReleased()
-{
-    m_cancel_search_button->setIcon(QIcon(":/MediaBrowser/CancelButton.png"));
-}
-
-void MusicBrowserView::cancelClicked()
-{
-    m_search_field->clear();
 }
 
 void MusicBrowserView::showEvent(QShowEvent *event)
@@ -219,11 +259,6 @@ void MusicBrowserView::selectionChanged(const QItemSelection &selected, const QI
 void MusicBrowserView::textChanged(const QString &text)
 {
     m_proxy_music_list_model->setFilterFixedString(text);
-
-    if (text.isEmpty())
-        m_cancel_search_button->setIcon(QIcon());
-    else
-        m_cancel_search_button->setIcon(QIcon(":/MediaBrowser/CancelButton.png"));
 }
 
 void MusicBrowserView::playButtonPressed()
