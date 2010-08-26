@@ -28,6 +28,8 @@ bool MusicFolderParser::filterFile(const QString &file_path)
       return true;
     if (extension == "aif" || extension == "aiff")
       return true;
+    if (extension == "caf")
+      return true;
     if (extension == "wav")
       return true;
 
