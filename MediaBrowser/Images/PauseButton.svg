@@ -10,7 +10,7 @@
 
      <defs>
 
-     <g id="play_button">
+     <g id="pause_button" transform="translate(0,1)">
        <path d="M 3 2 L 5 2 L 5 10 L 3 10 z" />
        <path d="M 8 2 L 10 2 L 10 10 L 8 10 z" />
      </g>
@@ -19,12 +19,12 @@
 
 <!--
 
-java -jar batik-rasterizer.jar -h 16 -w 16 -a 0,0,16,16 PlayButton.svg -d PlayButton.png
+java -jar batik-rasterizer.jar -h 16 -w 16 -a 0,0,16,16 PauseButton.svg -d PauseButton.png
 
 -->
 
 <g transform="scale(1.0)">
-   <use x="0" y="0" xlink:href="#play_button" class="color" />
+   <use x="0" y="0" xlink:href="#pause_button" class="color" />
 </g>
 
 </svg>

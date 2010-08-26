@@ -159,10 +159,7 @@ MusicBrowserView::MusicBrowserView(QWidget *parent)
     QString style_sheet;
     QTextStream ss(&style_sheet);
     ss << "* QLineEdit { selection-color: white; border: 2px groove gray; border-radius: 10px; padding: 0px 20px 0px 20px; }";
-    //ss << "* QLineEdit:focus { selection-color: white; border: 2px groove gray; border-radius: 10px; padding: 0px 4px; }";
-    //ss << "* QLineEdit:edit-focus { selection-color: white; border: 2px groove gray; border-radius: 10px; padding: 0px 4px; }";
-    //ss << "* QPushButton { min-width: 16px; max-width: 16px; min-height: 16px; max-height: 16px; border: 0px; }";
-    ss << "* QToolButton { border: 0px; }";
+    ss << "* QToolButton { border: 2px groove gray; border-radius: 10px; padding: 0px 3px 0px 5px; }";
     setStyleSheet(style_sheet);
 
     QWidget *search_box = new QWidget();
