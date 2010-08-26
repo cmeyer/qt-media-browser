@@ -1,3 +1,4 @@
+#include <QFileInfo>
 #include <QIcon>
 #include <QPixmap>
 #include <QUrl>
@@ -54,6 +55,11 @@ QVariant MediaListModel::displayFromMediaFile(MediaFilePtr media_file, int colum
     return QVariant();
 }
 
+QVariant MediaListModel::toolTipFromMediaFile(MediaFilePtr media_file, int column) const
+{
+    return displayFromMediaFile(media_file, column);
+}
+
 QVariant MediaListModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())
@@ -69,6 +75,11 @@ QVariant MediaListModel::data(const QModelIndex &index, int role) const
     if (role == Qt::DisplayRole)
     {
         return displayFromMediaFile(media_file, index.column());
+    }
+
+    if (role == Qt::ToolTipRole)
+    {
+        return toolTipFromMediaFile(media_file, index.column());
     }
 
     if (role == Qt::UserRole)

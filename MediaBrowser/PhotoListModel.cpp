@@ -39,11 +39,16 @@ QVariant PhotoListModel::decorationFromMediaFile(MediaFilePtr media_file, int co
     return m_media_loader->mediaFileIcon(m_icon_size, media_file, m_task_group);
 }
 
-QVariant PhotoListModel::displayFromMediaFile(MediaFilePtr media_file, int column) const
+QVariant PhotoListModel::toolTipFromMediaFile(MediaFilePtr media_file, int column) const
 {
     QFileInfo file_info(media_file->filePath());
 
-    return m_font_metrics.elidedText(file_info.fileName(), Qt::ElideMiddle, m_icon_size.width());
+    return file_info.fileName();
+}
+
+QVariant PhotoListModel::displayFromMediaFile(MediaFilePtr media_file, int column) const
+{
+    return m_font_metrics.elidedText(toolTipFromMediaFile(media_file, column).toString(), Qt::ElideMiddle, m_icon_size.width());
 }
 
 void PhotoListModel::resetTasks(const QModelIndexList &index_list)
