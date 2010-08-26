@@ -69,3 +69,8 @@ void PhotoListModel::setIconSize(const QSize &icon_size)
 {
     m_icon_size = icon_size;
 }
+
+QSize PhotoListModel::cellSize() const
+{
+    return m_icon_size + QSize(0, m_font_metrics.height());
+}

@@ -244,7 +244,7 @@ QIcon MediaFile::icon(const QSize &icon_size) const
     // if the image is valid, build the icon and cache it. otherwise, just
     // return a dummy 'loading' icon.
 
-    if (m_icon.isNull())
+    if (m_icon.isNull() || icon_size != m_icon_size)
     {
         if (!m_image.isNull())
         {
@@ -255,6 +255,7 @@ QIcon MediaFile::icon(const QSize &icon_size) const
             QRectF dest_rect = FitToAspectRatio(pm.rect(), aspect_ratio);
             p.drawImage(dest_rect, m_image);
             m_icon = QIcon(pm);
+            m_icon_size = icon_size;
         }
         else
         {

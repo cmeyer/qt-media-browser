@@ -46,6 +46,7 @@ private:
 
     mutable QMutex m_icon_mutex;
     mutable QIcon m_icon;
+    mutable QSize m_icon_size;
     QImage m_image;
     bool m_icon_loading;
     bool m_icon_loaded;

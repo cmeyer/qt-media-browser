@@ -23,6 +23,8 @@ public:
     void setFontMetrics(const QFontMetrics &font_metrics);
     void setIconSize(const QSize &icon_size);
 
+    QSize cellSize() const;
+
 private:
     MediaLoaderPtr m_media_loader;
     MediaBrowserPrivate::TaskGroupPtr m_task_group;

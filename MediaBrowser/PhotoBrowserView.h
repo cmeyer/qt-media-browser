@@ -4,6 +4,7 @@
 #include "MediaBrowserView.h"
 
 class PhotoListModel;
+class PhotoBrowserListView;
 
 class PhotoBrowserView : public MediaBrowserView
 {
@@ -13,8 +14,12 @@ public:
     PhotoBrowserView(QWidget *parent = NULL);
     virtual void addMediaParsers();
 
+private Q_SLOTS:
+    void setCellSize(int size);
+
 private:
     PhotoListModel *m_photo_list_model;
+    PhotoBrowserListView *m_image_list_view;
 };
 
 #endif // MEDIA_BROWSER_PHOTO_BROWSER_VIEW_H
