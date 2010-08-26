@@ -14,6 +14,7 @@
 PhotoListModel::PhotoListModel(QObject *parent)
     : MediaListModel(parent)
     , m_task_group(new MediaBrowserPrivate::TaskGroup(MediaFileTaskPool::instance()))
+    , m_font_metrics(QFont())
 {
     MediaLoaderPtr media_loader(new MediaLoader());
     m_media_loader = media_loader;
@@ -34,16 +35,15 @@ QVariant PhotoListModel::decorationFromMediaFile(MediaFilePtr media_file, int co
     // if the placeholder is returned, the media loader will signal
     // mediaLoaded when the icon becomes available. this class needs
     // to be prepared to handle those signals.
-    QIcon icon = m_media_loader->mediaFileIcon(media_file, m_task_group);
 
-    return icon;
+    return m_media_loader->mediaFileIcon(m_icon_size, media_file, m_task_group);
 }
 
 QVariant PhotoListModel::displayFromMediaFile(MediaFilePtr media_file, int column) const
 {
     QFileInfo file_info(media_file->filePath());
 
-    return file_info.fileName();
+    return m_font_metrics.elidedText(file_info.fileName(), Qt::ElideMiddle, m_icon_size.width());
 }
 
 void PhotoListModel::resetTasks(const QModelIndexList &index_list)
@@ -53,4 +53,14 @@ void PhotoListModel::resetTasks(const QModelIndexList &index_list)
     {
         data(index, Qt::DecorationRole);
     }
+}
+
+void PhotoListModel::setFontMetrics(const QFontMetrics &font_metrics)
+{
+    m_font_metrics = font_metrics;
+}
+
+void PhotoListModel::setIconSize(const QSize &icon_size)
+{
+    m_icon_size = icon_size;
 }

@@ -35,7 +35,7 @@ public:
 
     QString filePath() const;
 
-    QIcon icon() const;
+    QIcon icon(const QSize &icon_size) const;
     void loadIcon(MediaLoader *media_loader, MediaBrowserPrivate::TaskGroupPtr task_group);
 
     AudioMediaFileInfo audioInfo() const { return m_audio_info; }

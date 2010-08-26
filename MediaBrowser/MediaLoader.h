@@ -21,7 +21,7 @@ public:
     MediaLoader() { }
 
     void reset();
-    QIcon mediaFileIcon(MediaFilePtr media_file, MediaBrowserPrivate::TaskGroupPtr task_group);
+    QIcon mediaFileIcon(const QSize &icon_size, MediaFilePtr media_file, MediaBrowserPrivate::TaskGroupPtr task_group);
     AudioMediaFileInfo mediaFileAudioInfo(MediaFilePtr media_file, MediaBrowserPrivate::TaskGroupPtr task_group);
 
     // receive this message from media file

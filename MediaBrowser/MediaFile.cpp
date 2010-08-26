@@ -53,22 +53,22 @@ MediaFileTaskPool::~MediaFileTaskPool()
 {
 }
 
-QRect FitToAspectRatio(const QRect &rect, float aspect_ratio)
+QRectF FitToAspectRatio(const QRectF &rect, float aspect_ratio)
 {
     if (rect.width() > aspect_ratio * rect.height())
     {
         // height will fill entire frame
-        QSize new_size(rect.height()*aspect_ratio, rect.height());
-        QPoint new_origin(rect.left() + 0.5*(rect.width() - new_size.width()), rect.bottom());
+        QSizeF new_size(rect.height()*aspect_ratio, rect.height());
+        QPointF new_origin(rect.left() + 0.5*(rect.width() - new_size.width()), rect.top());
 
-        return QRect(new_origin, new_size);
+        return QRectF(new_origin, new_size);
     }
     else
     {
-        QSize new_size(rect.width(), rect.width()/aspect_ratio);
-        QPoint new_origin(rect.left(), rect.top() + 0.5*(rect.height() - new_size.height()));
+        QSizeF new_size(rect.width(), rect.width()/aspect_ratio);
+        QPointF new_origin(rect.left(), rect.top() + 0.5*(rect.height() - new_size.height()));
 
-        return QRect(new_origin, new_size);
+        return QRectF(new_origin, new_size);
     }
 }
 
@@ -87,7 +87,7 @@ void MediaFileIconThread::run()
 {
     QImageReader image_reader(m_media_file->filePath());
     QSize size = image_reader.size();
-    QSize scaled_size = FitToAspectRatio(QRect(QPoint(), QSize(64,48)), (float)size.width()/size.height()).size();
+    QSize scaled_size = FitToAspectRatio(QRectF(QPointF(), QSizeF(192,144)), (float)size.width()/size.height()).toRect().size();
     if (scaled_size.width() == 0 || scaled_size.height() == 0)
         scaled_size = size;
     image_reader.setScaledSize(scaled_size);
@@ -236,7 +236,7 @@ QString MediaFile::filePath() const
 #endif
 }
 
-QIcon MediaFile::icon() const
+QIcon MediaFile::icon(const QSize &icon_size) const
 {
     QMutexLocker lock(&m_icon_mutex);
 
@@ -248,18 +248,24 @@ QIcon MediaFile::icon() const
     {
         if (!m_image.isNull())
         {
-            m_icon = QIcon(QPixmap::fromImage(m_image));
+            QPixmap pm(icon_size);
+            pm.fill(Qt::transparent);
+            QPainter p(&pm);
+            float aspect_ratio = (float)m_image.width()/m_image.height();
+            QRectF dest_rect = FitToAspectRatio(pm.rect(), aspect_ratio);
+            p.drawImage(dest_rect, m_image);
+            m_icon = QIcon(pm);
         }
         else
         {
-            QPixmap empty(64,48);
+            QPixmap empty(icon_size);
             empty.fill();
             QPainter painter(&empty);
             painter.setRenderHint(QPainter::Antialiasing);
             QPainterPath path1;
-            path1.addRect(1,1,62,46);
+            path1.addRect(1,1,icon_size.width()-2,icon_size.height()-2);
             QPainterPath path2;
-            path2.addEllipse(32-10, 24-10, 20, 20);
+            path2.addEllipse(icon_size.width()/2-10, icon_size.height()/2-10, 20, 20);
             painter.strokePath(path1, QPen(Qt::black));
             painter.strokePath(path2, QPen(Qt::red));
             return QIcon(empty);

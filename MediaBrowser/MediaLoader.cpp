@@ -6,11 +6,11 @@ void MediaLoader::reset()
 {
 }
 
-QIcon MediaLoader::mediaFileIcon(MediaFilePtr media_file, MediaBrowserPrivate::TaskGroupPtr task_group)
+QIcon MediaLoader::mediaFileIcon(const QSize &icon_size, MediaFilePtr media_file, MediaBrowserPrivate::TaskGroupPtr task_group)
 {
     media_file->loadIcon(this, task_group);
 
-    return media_file->icon();
+    return media_file->icon(icon_size);
 }
 
 AudioMediaFileInfo MediaLoader::mediaFileAudioInfo(MediaFilePtr media_file, MediaBrowserPrivate::TaskGroupPtr task_group)

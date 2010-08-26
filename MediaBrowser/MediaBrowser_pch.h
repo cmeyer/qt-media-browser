@@ -17,6 +17,7 @@
 #include <QDirModel>
 #include <QFile>
 #include <QFileInfo>
+#include <QFontMetrics>
 #include <QHeaderView>
 #include <QIcon>
 #include <QImageReader>

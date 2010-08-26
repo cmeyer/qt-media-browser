@@ -44,6 +44,12 @@ void PhotoBrowserListView::paintEvent(QPaintEvent *event)
 PhotoBrowserView::PhotoBrowserView(QWidget *parent)
         : MediaBrowserView(parent)
 {
+    QString style_sheet;
+    QTextStream ss(&style_sheet);
+    ss << "* QLineEdit { selection-color: white; border: 2px groove gray; border-radius: 10px; padding: 0px 20px 0px 20px; }";
+    ss << "* QToolButton { border: 2px groove gray; border-radius: 10px; padding: 0px 3px 0px 5px; }";
+    setStyleSheet(style_sheet);
+
     m_photo_list_model = new PhotoListModel();
 
     setMediaListModel(m_photo_list_model);
@@ -51,7 +57,6 @@ PhotoBrowserView::PhotoBrowserView(QWidget *parent)
     QListView *image_list_view = new PhotoBrowserListView(m_photo_list_model);
     image_list_view->setFlow(QListView::LeftToRight);
     image_list_view->setViewMode(QListView::IconMode);
-    image_list_view->setIconSize(QSize(60, 45));
     image_list_view->setMovement(QListView::Static);
     image_list_view->setResizeMode(QListView::Adjust);
     image_list_view->setWrapping(true);
@@ -60,6 +65,17 @@ PhotoBrowserView::PhotoBrowserView(QWidget *parent)
     image_list_view->setDragDropMode(QListView::DragOnly);
     image_list_view->setDragEnabled(true);
     image_list_view->setModel(m_photo_list_model);
+
+    // set up the font size
+    QFont style_font = image_list_view->font();
+    style_font.setPixelSize(11);
+    image_list_view->setFont(style_font);
+    m_photo_list_model->setFontMetrics(image_list_view->fontMetrics());
+
+    // set up the cell size
+    QSize icon_size = QSize(80, 60);
+    image_list_view->setIconSize(icon_size + QSize(0, image_list_view->fontMetrics().height()));
+    m_photo_list_model->setIconSize(icon_size);
 
     setTreeContentView(image_list_view);
 }
