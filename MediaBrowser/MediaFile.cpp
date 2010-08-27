@@ -248,18 +248,38 @@ QIcon MediaFile::icon(const QSize &icon_size) const
     {
         if (!m_image.isNull())
         {
-            QPixmap pm(icon_size);
+            QPixmap pm(icon_size + QSize(2,3));
             pm.fill(Qt::transparent);
             QPainter p(&pm);
             float aspect_ratio = (float)m_image.width()/m_image.height();
-            QRectF dest_rect = FitToAspectRatio(pm.rect(), aspect_ratio);
+            QRectF dest_rect = FitToAspectRatio(QRect(QPoint(), icon_size), aspect_ratio);
             p.drawImage(dest_rect, m_image);
+            p.setPen(Qt::gray);
+            p.drawRect(dest_rect);
+            QLinearGradient v_gradient(dest_rect.bottomLeft(), dest_rect.bottomLeft()+QPoint(0,4));
+            v_gradient.setColorAt(0.0, QColor(Qt::gray));
+            v_gradient.setColorAt(1.0, QColor(Qt::white));
+            QBrush h_brush(v_gradient);
+            QRectF h_rect = dest_rect;
+            h_rect.setLeft(dest_rect.left() + 2);
+            h_rect.setBottom(dest_rect.bottom() + 4);
+            h_rect.setTop(dest_rect.bottom());
+            p.fillRect(h_rect, h_brush);
+            QLinearGradient h_gradient(dest_rect.topRight(), dest_rect.topRight()+QPoint(3,0));
+            h_gradient.setColorAt(0.0, QColor(Qt::gray));
+            h_gradient.setColorAt(1.0, QColor(Qt::white));
+            QBrush v_brush(h_gradient);
+            QRectF v_rect = dest_rect;
+            v_rect.setLeft(dest_rect.right());
+            v_rect.setRight(dest_rect.right() + 2);
+            v_rect.setTop(dest_rect.top() + 2);
+            p.fillRect(v_rect, v_brush);
             m_icon = QIcon(pm);
             m_icon_size = icon_size;
         }
         else
         {
-            QPixmap empty(icon_size);
+            QPixmap empty(icon_size + QSize(2,3));
             empty.fill();
             QPainter painter(&empty);
             painter.setRenderHint(QPainter::Antialiasing);
