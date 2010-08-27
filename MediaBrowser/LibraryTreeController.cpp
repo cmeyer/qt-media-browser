@@ -60,7 +60,6 @@ void LibraryTreeAppendChildAction::execute(LibraryTreeItemPtr library_tree_root_
 
 void LibraryTreeAppendMediaFile::execute(LibraryTreeItemPtr library_tree_root_item, LibraryTreeModel *model)
 {
-// TODO: LibraryTreeAppendMediaFile::execute
     LibraryTreeItemPtr library_tree_item = m_library_tree_index.resolve(library_tree_root_item);
     library_tree_item->addMediaFile(m_media_file);
 }

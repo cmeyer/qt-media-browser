@@ -109,15 +109,23 @@ void MediaListModel::setLibraryTreeItem(LibraryTreeItemPtr library_tree_item)
     if (library_tree_item != NULL)
         library_tree_item->setWatcher(this);
 
-    beginRemoveRows(QModelIndex(), 0, rowCount(QModelIndex()));
+    if (rowCount() > 0)
+    {
+        beginRemoveRows(QModelIndex(), 0, rowCount()-1);
 
-    endRemoveRows();
+        m_library_tree_item.reset();
 
-    beginInsertRows(QModelIndex(), 0, library_tree_item->mediaFileCount());
+        endRemoveRows();
+    }
 
-    m_library_tree_item = library_tree_item;
+    if (library_tree_item->mediaFileCount() > 0)
+    {
+        beginInsertRows(QModelIndex(), 0, library_tree_item->mediaFileCount()-1);
 
-    endInsertRows();
+        m_library_tree_item = library_tree_item;
+
+        endInsertRows();
+    }
 }
 
 void MediaListModel::libraryTreeItemChanged()
