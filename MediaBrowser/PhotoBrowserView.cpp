@@ -2,6 +2,7 @@
 #include <QDesktopServices>
 #include <QHBoxLayout>
 #include <QListView>
+#include <QSettings>
 #include <QSlider>
 
 #include "PhotoBrowserView.h"
@@ -75,7 +76,7 @@ PhotoBrowserView::PhotoBrowserView(QWidget *parent)
     m_photo_list_model->setFontMetrics(m_image_list_view->fontMetrics());
 
     // set up the cell size
-    QSize icon_size = QSize(84, 63);
+    QSize icon_size = QSettings().value("MediaBrowser.iconSize", QSize(84, 63)).toSize();
     m_photo_list_model->setIconSize(icon_size);
 
     m_image_list_view->setIconSize(m_photo_list_model->cellSize());
@@ -109,6 +110,8 @@ void PhotoBrowserView::setCellSize(int size)
     QSize icon_size = QSize(size, 3*size/4);
     m_photo_list_model->setIconSize(icon_size);
     m_image_list_view->setIconSize(m_photo_list_model->cellSize());
+
+    QSettings().setValue("MediaBrowser.iconSize", icon_size);
 }
 
 void PhotoBrowserView::addMediaParsers()
