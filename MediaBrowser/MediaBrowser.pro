@@ -28,6 +28,7 @@ SOURCES += \
     PhotoBrowserView.cpp \
     PhotoFolderParser.cpp \
     PhotoListModel.cpp \
+    SearchField.cpp \
     TaskGroup.cpp \
     TaskPool.cpp \
 
@@ -49,6 +50,7 @@ HEADERS += \
     PhotoBrowserView.h \
     PhotoFolderParser.h \
     PhotoListModel.h \
+    SearchField.h \
     TaskGroup.h \
     TaskPool.h \
 

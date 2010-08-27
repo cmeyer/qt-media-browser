@@ -20,6 +20,7 @@
 #include "MusicListModel.h"
 #include "MusicFolderParser.h"
 #include "iTunesLibraryParser.h"
+#include "SearchField.h"
 
 #if defined(Q_OS_MAC)
 #include "MacUtility.h"
@@ -80,77 +81,6 @@ public:
     }
 };
 
-#include <QPainter>
-
-SearchLineEdit::SearchLineEdit(const QString &default_str, QWidget *parent)
-    : QLineEdit(parent), m_default_str(default_str), m_state(SearchLineEdit::STATE_HIDDEN)
-{
-    connect(this, SIGNAL(textChanged(QString)), this, SLOT(textChanged(QString)));
-
-    m_magnifying_glass_image.load(":/MediaBrowser/MagnifyingGlass.png");
-    m_cancel_button_image.load(":/MediaBrowser/CancelButton.png");
-    m_cancel_button_dark_image.load(":/MediaBrowser/CancelButton-dark.png");
-}
-
-QRect SearchLineEdit::cancelButtonRect()
-{
-    QRect pr = rect();
-    QRect r = m_cancel_button_image.rect();
-    r.moveCenter(QPoint(pr.right() - 4 - r.width()/2, pr.center().y()));
-    return r;
-}
-
-void SearchLineEdit::paintEvent(QPaintEvent *event)
-{
-    QLineEdit::paintEvent(event);
-
-    QPainter p(this);
-    QRect pr = rect();
-
-    {
-        QRect r = m_magnifying_glass_image.rect();
-        r.moveCenter(QPoint(pr.left() + 4 + r.width()/2, pr.center().y()));
-        p.drawImage(r, m_magnifying_glass_image);
-    }
-
-    if (m_state != SearchLineEdit::STATE_HIDDEN)
-    {
-        p.drawImage(cancelButtonRect(), (m_state == SearchLineEdit::STATE_VISIBLE_NORMAL) ? m_cancel_button_image : m_cancel_button_dark_image);
-    }
-}
-
-void SearchLineEdit::textChanged(const QString &text)
-{
-    m_state = text.isEmpty() ? SearchLineEdit::STATE_HIDDEN : SearchLineEdit::STATE_VISIBLE_NORMAL;
-}
-
-void SearchLineEdit::mousePressEvent(QMouseEvent *event)
-{
-    if (cancelButtonRect().contains(event->pos()) && !text().isEmpty())
-    {
-        m_state = SearchLineEdit::STATE_VISIBLE_DOWN;
-        update();
-    }
-    QLineEdit::mousePressEvent(event);
-}
-
-void SearchLineEdit::mouseReleaseEvent(QMouseEvent *event)
-{
-    if (cancelButtonRect().contains(event->pos()))
-        setText(QString());
-    m_state = text().isEmpty() ? SearchLineEdit::STATE_HIDDEN : SearchLineEdit::STATE_VISIBLE_NORMAL;
-    update();
-    QLineEdit::mouseReleaseEvent(event);
-}
-
-void SearchLineEdit::keyPressEvent(QKeyEvent *event)
-{
-    if (event->key() == Qt::Key_Escape)
-        setText(QString());
-    else
-        QLineEdit::keyPressEvent(event);
-}
-
 MusicBrowserView::MusicBrowserView(QWidget *parent)
     : MediaBrowserView(parent)
     , m_player(NULL)
@@ -170,7 +100,7 @@ MusicBrowserView::MusicBrowserView(QWidget *parent)
     search_box_layout->setContentsMargins(12, 2, 12, 2);
     search_box_layout->setSpacing(2);
 
-    m_search_field = new SearchLineEdit(tr("Search..."));
+    m_search_field = new SearchField(tr("Search..."));
     //m_search_field->setPlaceholderText(tr("Search..."));
     m_search_field->setStyle(new NoFocusStyle());
     m_search_field->adjustSize();
