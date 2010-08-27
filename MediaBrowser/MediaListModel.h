@@ -21,6 +21,8 @@ public:
     MediaListModel(QObject *parent = 0);
     ~MediaListModel();
 
+    enum { FullPathRole = Qt::UserRole, SortRole = Qt::UserRole + 1 };
+
     void setLibraryTreeItem(LibraryTreeItemPtr library_tree_item);
 
     // abstract methods
@@ -28,6 +30,7 @@ public:
     virtual QVariant decorationFromMediaFile(MediaFilePtr media_file, int column) const;
     virtual QVariant displayFromMediaFile(MediaFilePtr media_file, int column) const;
     virtual QVariant toolTipFromMediaFile(MediaFilePtr media_file, int column) const;
+    virtual QVariant sortValueFromMediaFile(MediaFilePtr media_file, int column) const;
     virtual void resetTasks(const QModelIndexList &index_list);
 
     // from QAbstractListModel

@@ -61,6 +61,11 @@ QVariant MediaListModel::toolTipFromMediaFile(MediaFilePtr media_file, int colum
     return displayFromMediaFile(media_file, column);
 }
 
+QVariant MediaListModel::sortValueFromMediaFile(MediaFilePtr media_file, int column) const
+{
+    return displayFromMediaFile(media_file, column);
+}
+
 QVariant MediaListModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())
@@ -83,9 +88,14 @@ QVariant MediaListModel::data(const QModelIndex &index, int role) const
         return toolTipFromMediaFile(media_file, index.column());
     }
 
-    if (role == Qt::UserRole)
+    if (role == FullPathRole)
     {
         return media_file->filePath();
+    }
+
+    if (role == SortRole)
+    {
+        return sortValueFromMediaFile(media_file, index.column());
     }
 
     return QVariant();
@@ -153,7 +163,7 @@ QMimeData *MediaListModel::mimeData(const QModelIndexList &indexes) const
     
     Q_FOREACH(QModelIndex index, indexes) {
         if (index.isValid() && index.column() == 0) {
-            QString file_path = qVariantValue<QString>(data(index, Qt::UserRole));
+            QString file_path = qVariantValue<QString>(data(index, FullPathRole));
             urls.push_back(QUrl::fromLocalFile(file_path));
         }
     }

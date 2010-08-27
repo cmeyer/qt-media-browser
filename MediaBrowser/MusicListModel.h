@@ -16,6 +16,7 @@ public:
     virtual int dataColumnCount() const;
     virtual QVariant displayFromMediaFile(MediaFilePtr media_file, int column) const;
     virtual QVariant headerData(int section, Qt::Orientation orientation, int role) const;
+    virtual QVariant sortValueFromMediaFile(MediaFilePtr media_file, int column) const;
     virtual void resetTasks(const QModelIndexList &index_list);
 
 private:

@@ -91,6 +91,19 @@ QVariant MusicListModel::headerData(int section, Qt::Orientation orientation, in
     return QVariant();
 }
 
+QVariant MusicListModel::sortValueFromMediaFile(MediaFilePtr media_file, int column) const
+{
+    if (column == 2)
+    {
+        AudioMediaFileInfo audio_info = m_media_loader->mediaFileAudioInfo(media_file, m_task_group);
+        return audio_info.duration();
+    }
+    else
+    {
+        return displayFromMediaFile(media_file, column);
+    }
+}
+
 void MusicListModel::resetTasks(const QModelIndexList &index_list)
 {
     // first remove everything from the queue

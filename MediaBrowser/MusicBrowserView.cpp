@@ -90,6 +90,7 @@ MusicBrowserView::MusicBrowserView(QWidget *parent)
     m_proxy_music_list_model->setDynamicSortFilter(true);
     m_proxy_music_list_model->setFilterCaseSensitivity(Qt::CaseInsensitive);
     m_proxy_music_list_model->setFilterKeyColumn(-1);
+    m_proxy_music_list_model->setSortRole(MediaListModel::SortRole);
 
     setMediaListModel(m_music_list_model);
 
@@ -136,7 +137,7 @@ void MusicBrowserView::selectionChanged(const QItemSelection &selected, const QI
     if (model_index_list.count() > 0)
     {
         QModelIndex first_index = m_proxy_music_list_model->mapToSource(model_index_list.at(0));
-        m_current_file_path = qVariantValue<QString>(m_music_list_model->data(first_index, Qt::UserRole));
+        m_current_file_path = qVariantValue<QString>(m_music_list_model->data(first_index, MediaListModel::FullPathRole));
         m_play_button->show();
     }
     else
