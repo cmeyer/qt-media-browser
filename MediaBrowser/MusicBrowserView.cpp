@@ -8,8 +8,6 @@
 #include <QMouseEvent>
 #include <QPushButton>
 #include <QSortFilterProxyModel>
-#include <QStyleOption>
-#include <QStyleOptionButton>
 #include <QToolButton>
 #include <QTreeView>
 #include <QWindowsStyle>
@@ -52,35 +50,6 @@ void MusicBrowserTreeView::mouseDoubleClickEvent(QMouseEvent *event)
     Q_EMIT playMusic();
 }
 
-// see http://developer.qt.nokia.com/faq/answer/how_can_i_avoid_drawing_the_focus_rect_on_my_buttons
-// see http://stackoverflow.com/questions/2588743/qt-4-6-qlineedit-style-how-do-i-style-the-gray-highlight-border-so-its-rounded
-
-class NoFocusStyle : public QWindowsStyle
-{
-public:
-    NoFocusStyle() { }
-    void drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget = 0) const
-    {
-        if (element == CE_PushButton)
-        {
-            const QStyleOptionButton *b = qstyleoption_cast<const QStyleOptionButton *>(option);
-            QStyleOptionButton *button = (QStyleOptionButton *)b;
-            if (button)
-            {
-                if (button->state & State_HasFocus)
-                {
-                    button->state = button->state ^ State_HasFocus;
-                }
-            }
-            QWindowsStyle::drawControl(element, button, painter, widget);
-        }
-        else
-        {
-            QWindowsStyle::drawControl(element, option, painter, widget);
-        }
-    }
-};
-
 MusicBrowserView::MusicBrowserView(QWidget *parent)
     : MediaBrowserView(parent)
     , m_player(NULL)
@@ -88,7 +57,6 @@ MusicBrowserView::MusicBrowserView(QWidget *parent)
 {
     QString style_sheet;
     QTextStream ss(&style_sheet);
-    ss << "* QLineEdit { selection-color: white; border: 2px groove gray; border-radius: 10px; padding: 0px 20px 0px 20px; }";
     ss << "* QToolButton { border: 2px groove gray; border-radius: 10px; padding: 0px 3px 0px 5px; }";
     ss << "* QTreeView#music { font: 11px; color: black; } ";
     ss << "* QTreeView#music::item { padding-top: 1px; padding-bottom: 1px; border: 1px solid #EEE; border-top-color: transparent; border-bottom-color: transparent; } ";
@@ -101,8 +69,6 @@ MusicBrowserView::MusicBrowserView(QWidget *parent)
     search_box_layout->setSpacing(2);
 
     m_search_field = new SearchField(tr("Search..."));
-    //m_search_field->setPlaceholderText(tr("Search..."));
-    m_search_field->setStyle(new NoFocusStyle());
     m_search_field->adjustSize();
 
     m_play_button = new QToolButton();

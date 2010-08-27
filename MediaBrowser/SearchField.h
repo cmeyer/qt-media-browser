@@ -2,6 +2,7 @@
 #define MEDIA_BROWSER_SEARCH_FIELD_H
 
 #include <QLineEdit>
+#include <QWindowsStyle>
 
 class SearchField : public QLineEdit
 {
@@ -27,5 +28,3 @@ private:
 };
 
 #endif // MEDIA_BROWSER_SEARCH_FIELD_H
-
-

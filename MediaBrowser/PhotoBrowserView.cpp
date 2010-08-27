@@ -4,10 +4,12 @@
 #include <QListView>
 #include <QSettings>
 #include <QSlider>
+#include <QSortFilterProxyModel>
 
 #include "PhotoBrowserView.h"
 #include "PhotoListModel.h"
 #include "PhotoFolderParser.h"
+#include "SearchField.h"
 
 #if defined(Q_OS_MAC)
 #include "iPhotoLibraryParser.h"
@@ -18,10 +20,14 @@
 class PhotoBrowserListView : public QListView
 {
 public:
-    PhotoBrowserListView(PhotoListModel *photo_list_model) : m_photo_list_model(photo_list_model) { }
+    PhotoBrowserListView(PhotoListModel *photo_list_model, QSortFilterProxyModel *proxy_photo_list_model)
+        : m_photo_list_model(photo_list_model)
+        , m_proxy_photo_list_model(proxy_photo_list_model)
+    { }
     void paintEvent(QPaintEvent *event);
 private:
     PhotoListModel *m_photo_list_model;
+    QSortFilterProxyModel *m_proxy_photo_list_model;
 };
 
 void PhotoBrowserListView::paintEvent(QPaintEvent *event)
@@ -36,8 +42,10 @@ void PhotoBrowserListView::paintEvent(QPaintEvent *event)
         // build the 'mapped to source' index list
         QModelIndexList index_list;
         for (int i=first_index; i<=last_index; ++i)
-            index_list.append(m_photo_list_model->index(i,0));
-        
+        {
+            index_list.append(m_proxy_photo_list_model->mapToSource(m_proxy_photo_list_model->index(i,0)));
+        }
+
         m_photo_list_model->resetTasks(index_list);
     }
 
@@ -55,9 +63,17 @@ PhotoBrowserView::PhotoBrowserView(QWidget *parent)
 
     m_photo_list_model = new PhotoListModel();
 
+    m_proxy_photo_list_model = new QSortFilterProxyModel();
+
+    m_proxy_photo_list_model->setSourceModel(m_photo_list_model);
+    m_proxy_photo_list_model->setDynamicSortFilter(true);
+    m_proxy_photo_list_model->setFilterCaseSensitivity(Qt::CaseInsensitive);
+    m_proxy_photo_list_model->setFilterKeyColumn(-1);
+    m_proxy_photo_list_model->setFilterRole(Qt::ToolTipRole);
+
     setMediaListModel(m_photo_list_model);
 
-    m_image_list_view = new PhotoBrowserListView(m_photo_list_model);
+    m_image_list_view = new PhotoBrowserListView(m_photo_list_model, m_proxy_photo_list_model);
     m_image_list_view->setFlow(QListView::LeftToRight);
     m_image_list_view->setViewMode(QListView::IconMode);
     m_image_list_view->setMovement(QListView::Static);
@@ -67,7 +83,9 @@ PhotoBrowserView::PhotoBrowserView(QWidget *parent)
     m_image_list_view->setSelectionMode(QAbstractItemView::ExtendedSelection);
     m_image_list_view->setDragDropMode(QListView::DragOnly);
     m_image_list_view->setDragEnabled(true);
-    m_image_list_view->setModel(m_photo_list_model);
+    m_image_list_view->setModel(m_proxy_photo_list_model);
+
+    m_proxy_photo_list_model->setFilterRegExp("."); // workaround for sort filter wierdness (needs root item or something)
 
     // set up the font size
     QFont style_font = m_image_list_view->font();
@@ -81,9 +99,11 @@ PhotoBrowserView::PhotoBrowserView(QWidget *parent)
 
     m_image_list_view->setIconSize(m_photo_list_model->cellSize());
 
+    setTreeContentView(m_image_list_view);
+
     QWidget *search_box = new QWidget();
     QHBoxLayout *search_box_layout = new QHBoxLayout(search_box);
-    search_box_layout->setContentsMargins(12, 2, 12, 2);
+    search_box_layout->setContentsMargins(12, 1, 12, 1);
     search_box_layout->setSpacing(2);
 
     QSlider *size_slider = new QSlider();
@@ -94,15 +114,25 @@ PhotoBrowserView::PhotoBrowserView(QWidget *parent)
     size_slider->setMaximumWidth(80);
     size_slider->setOrientation(Qt::Horizontal);
 
+    m_search_field = new SearchField(tr("Search..."));
+    m_search_field->adjustSize();
+
     search_box_layout->addWidget(size_slider);
     search_box_layout->addSpacerItem(new QSpacerItem(4, 4, QSizePolicy::Expanding, QSizePolicy::Minimum));
-    //search_box_layout->addWidget(m_search_field);
+    search_box_layout->addWidget(m_search_field);
 
     m_layout->addWidget(search_box);
 
-    setTreeContentView(m_image_list_view);
+    connect(size_slider, SIGNAL(valueChanged(int)), this, SLOT(setCellSize(int)));
+    connect(m_search_field, SIGNAL(textChanged(QString)), this, SLOT(textChanged(QString)));
+}
 
-    connect(size_slider, SIGNAL(sliderMoved(int)), this, SLOT(setCellSize(int)));
+void PhotoBrowserView::textChanged(const QString &text)
+{
+    if (text.isEmpty())
+        m_proxy_photo_list_model->setFilterRegExp(".");
+    else
+        m_proxy_photo_list_model->setFilterFixedString(text);
 }
 
 void PhotoBrowserView::setCellSize(int size)

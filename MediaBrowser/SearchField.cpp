@@ -2,10 +2,49 @@
 
 #include <QMouseEvent>
 #include <QPainter>
+#include <QStyleOption>
+#include <QStyleOptionButton>
+#include <QTextStream>
+
+// see http://developer.qt.nokia.com/faq/answer/how_can_i_avoid_drawing_the_focus_rect_on_my_buttons
+// see http://stackoverflow.com/questions/2588743/qt-4-6-qlineedit-style-how-do-i-style-the-gray-highlight-border-so-its-rounded
+
+class NoFocusStyle : public QWindowsStyle
+{
+public:
+    NoFocusStyle() { }
+    void drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget = 0) const
+    {
+        if (element == CE_PushButton)
+        {
+            const QStyleOptionButton *b = qstyleoption_cast<const QStyleOptionButton *>(option);
+            QStyleOptionButton *button = (QStyleOptionButton *)b;
+            if (button)
+            {
+                if (button->state & State_HasFocus)
+                {
+                    button->state = button->state ^ State_HasFocus;
+                }
+            }
+            QWindowsStyle::drawControl(element, button, painter, widget);
+        }
+        else
+        {
+            QWindowsStyle::drawControl(element, option, painter, widget);
+        }
+    }
+};
 
 SearchField::SearchField(const QString &default_str, QWidget *parent)
     : QLineEdit(parent), m_default_str(default_str), m_state(SearchField::STATE_HIDDEN)
 {
+    QString style_sheet;
+    QTextStream ss(&style_sheet);
+    ss << "* QLineEdit { selection-color: white; border: 2px groove gray; border-radius: 10px; padding: 0px 20px 0px 20px; }";
+    setStyleSheet(style_sheet);
+
+    setStyle(new NoFocusStyle());
+
     connect(this, SIGNAL(textChanged(QString)), this, SLOT(textChanged(QString)));
 
     m_magnifying_glass_image.load(":/MediaBrowser/MagnifyingGlass.png");

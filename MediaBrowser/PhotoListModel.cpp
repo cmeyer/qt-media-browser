@@ -53,9 +53,19 @@ QVariant PhotoListModel::displayFromMediaFile(MediaFilePtr media_file, int colum
 
 void PhotoListModel::resetTasks(const QModelIndexList &index_list)
 {
+    // first remove everything from the queue
     m_task_group->cancelAllTasks();
+
+    // now prioritize the display items first
     Q_FOREACH(const QModelIndex &index, index_list)
     {
+        data(index, Qt::DecorationRole);
+    }
+
+    // now the rest of the items
+    for(int i=0; i<rowCount(); i++)
+    {
+        QModelIndex index = this->index(i,0);
         data(index, Qt::DecorationRole);
     }
 }
