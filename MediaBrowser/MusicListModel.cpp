@@ -5,10 +5,6 @@
 #include "LibraryTreeItem.h"
 #include "MediaLoader.h"
 #include "MediaFile.h"
-#if defined(USE_TAGLIB)
-#include <fileref.h>
-#include <tag.h>
-#endif
 #include "TaskGroup.h"
 
 static QString DurationAsSeconds(unsigned duration_as_seconds)
