@@ -126,6 +126,10 @@ void MediaListModel::setLibraryTreeItem(LibraryTreeItemPtr library_tree_item)
 
         endInsertRows();
     }
+    else
+    {
+        m_library_tree_item = library_tree_item;
+    }
 }
 
 void MediaListModel::libraryTreeItemChanged()
