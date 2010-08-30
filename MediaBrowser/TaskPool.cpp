@@ -1,12 +1,3 @@
-/*
- *  Threading.cpp
- *  LQFoundation
- *
- *  Created by Chris Meyer on 4/26/09.
- *  Copyright 2009 LQ Graphics, Inc. All rights reserved.
- *
- */
-
 #include "TaskPool.h"
 
 #include <boost/foreach.hpp>
