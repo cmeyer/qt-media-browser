@@ -16,7 +16,10 @@ typedef boost::shared_ptr<class LibraryTreeItemPromise> LibraryTreeItemPromisePt
 class LibraryTreeModel;
 
 // the library tree item index represents an index into the tree at the time
-// the action is added to the tree.
+// the action is added to the tree. it is used while synchronizing from the live
+// tree to the display tree and even then it is only valid if used in the same
+// sequence in the display tree as in the live tree.
+
 class LibraryTreeItemIndex
 {
 public:
@@ -33,6 +36,7 @@ private:
 // is a fast operation and can be done on the user interface thread at which time
 // the list of actions representing the difference between the live and display tree
 // will be cleared.
+
 class LibraryTreeAction
 {
 public:
@@ -67,24 +71,31 @@ private:
     MediaFilePtr m_media_file;
 };
 
-// all changes to the library tree should go through this controller
-// changes are made immediately to the live tree. these changes can be
-// made at any time from any thread. call sync to synchronize from the
-// live tree to the display tree.
+// all changes that parsers make to the library tree should go through this controller.
+// changes are made immediately to the live tree and are thread safe. the sync method will
+// synchronize from the live tree to the display tree. it is a fast operation and needs to
+// be done from the user interface thread.
+
 class LibraryTreeController : public boost::enable_shared_from_this<LibraryTreeController>
 {
 public:
     LibraryTreeController(LibraryTreeModel *library_tree_model);
 
     LibraryTreeItemPtr appendChild(LibraryTreeItemPtr parent, const QString &title, LibraryTreeItemPromisePtr promise = LibraryTreeItemPromisePtr());
+
+    // thread safe calls to invoke from parsers
     void appendFile(LibraryTreeItemPtr library_tree_item, const QString &file_path);
     void appendMediaFile(LibraryTreeItemPtr library_tree_item, MediaFilePtr media_file);
 
     LibraryTreeItemPtr liveRootLibraryTreeItem() const { return m_live_root_item; }
     LibraryTreeItemPtr displayRootLibraryTreeItem() const { return m_display_root_item; }
 
+    // this call must be made from the main user interface thread
     void sync();
 
+    // parsers are free to partially populate the tree. if they do this, they must provide
+    // a promise to populate further if the display requires it. this method will be invoked
+    // to fulfill that promise. it calls populate on the item with this objct as a parameter.
     void populateItem(LibraryTreeItemPtr item);
 
 private:
@@ -96,7 +107,7 @@ private:
     QMutex m_library_tree_action_list_mutex;
     LibraryTreeActionList m_library_tree_action_list;
 
-    // the owner
+    // the owner. used while syncing.
     LibraryTreeModel *m_library_tree_model;
 };
 
