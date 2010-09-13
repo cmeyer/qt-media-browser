@@ -8,7 +8,7 @@ class SearchField : public QLineEdit
 {
     Q_OBJECT
 public:
-    SearchField(const QString &default_str, QWidget *parent = nil);
+    SearchField(const QString &default_str, QWidget *parent = NULL);
     virtual void paintEvent(QPaintEvent *event);
     virtual void mousePressEvent(QMouseEvent *event);
     virtual void mouseReleaseEvent(QMouseEvent *event);

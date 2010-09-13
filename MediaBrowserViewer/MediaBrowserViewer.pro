@@ -34,7 +34,8 @@ win32 {
         QMAKE_CXXFLAGS_WARN_ON = -w44100
         CONFIG(debug, debug|release) {
             LINKLIBS += \
-                ../MediaBrowser/debug/MediaBrowser.lib \
+                C:/QtMobility/lib/QtMultimediaKitd1.lib \
+                ../MediaBrowser/debug/MediaBrowserd.lib \
                 ../taglib/taglib/build/debug/TagLib.lib
             # See http://msdn.microsoft.com/en-us/library/aa267384%28VS.60%29.aspx?ppud=4
             # Use /MDd option Multithreaded using DLL (msvcrt.lib)
@@ -43,6 +44,7 @@ win32 {
         }
         CONFIG(release, debug|release) {
             LINKLIBS += \
+                C:/QtMobility/lib/QtMultimediaKit1.lib \
                 ../MediaBrowser/release/MediaBrowser.lib \
                 ../taglib/taglib/build/release/TagLib.lib
             # See http://msdn.microsoft.com/en-us/library/aa267384%28VS.60%29.aspx?ppud=4
@@ -51,7 +53,6 @@ win32 {
             #QMAKE_LFLAGS += /VERBOSE:LIB
         }
         LINKLIBS += \
-            "../QuickTime SDK/Libraries/QTMLClient.lib" \
             "$$(DXSDK_DIR)/Lib/x86/dxguid.lib" \
             "$$(DXSDK_DIR)/../../Program Files/Microsoft SDKs/Windows/v7.0/Lib/dmoguids.lib" \
             "$$(DXSDK_DIR)/../../Program Files/Microsoft SDKs/Windows/v7.0/Lib/msdmo.lib" \
@@ -77,7 +78,7 @@ win32 {
         QMAKE_CXXFLAGS += -x c++
         QMAKE_CXXFLAGS_WARN_ON = -Wno-multichar
     }
-    RC_FILE = Application.rc
+    #RC_FILE = Application.rc
 }
 macx {
     DEFINES += MAC_OS_X_VERSION_MIN_REQUIRED=1040

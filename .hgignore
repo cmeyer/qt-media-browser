@@ -26,6 +26,12 @@ boost
 qt-mobility*
 
 # ignore subversion, mac stuff, and emacs stuff
+syntax: glob
 *svn*
 .DS_Store
 *~
+
+# ignore visual studio stuff
+syntax: glob
+**/object_script*
+**/*.pdb

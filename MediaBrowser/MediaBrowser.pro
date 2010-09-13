@@ -141,6 +141,9 @@ macx {
 
 win32 {
     win32-msvc2008 {
+        INCLUDEPATH += C:/QtMobility/include/QtMultimediaKit
+        INCLUDEPATH += C:/QtMobility/include/QtMobility
+
         CONFIG += staticlib
         DEFINES += BOOST_ALL_NO_LIB
         QMAKE_CXXFLAGS_WARN_ON = -w44100

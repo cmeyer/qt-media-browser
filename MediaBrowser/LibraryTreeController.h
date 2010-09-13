@@ -56,8 +56,8 @@ public:
     virtual void execute(LibraryTreeItemPtr library_tree_root_item, LibraryTreeModel *model);
 private:
     LibraryTreeItemIndex m_library_tree_index;
-    LibraryTreeItemPromisePtr m_promise;
     QString m_title;
+    LibraryTreeItemPromisePtr m_promise;
 };
 
 // append a media file

@@ -1,6 +1,6 @@
+#include <QApplication>
 #include <QVBoxLayout>
 #include <QWidget>
-
 #include "MainWindow.h"
 #include <MediaBrowser/MediaBrowser.h>
 
