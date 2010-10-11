@@ -4,22 +4,27 @@
 <context>
     <name>MusicBrowserView</name>
     <message>
-        <location filename="../MusicBrowserView.cpp" line="94"/>
+        <location filename="../MusicBrowserView.cpp" line="71"/>
+        <source>Search...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MusicBrowserView.cpp" line="193"/>
         <source>iLife Sound Effects</source>
         <translation>Effets audio iLife</translation>
     </message>
     <message>
-        <location filename="../MusicBrowserView.cpp" line="104"/>
+        <location filename="../MusicBrowserView.cpp" line="203"/>
         <source>iMovie Sound Effects</source>
         <translation>Effets audio iMovie</translation>
     </message>
     <message>
-        <location filename="../MusicBrowserView.cpp" line="114"/>
+        <location filename="../MusicBrowserView.cpp" line="213"/>
         <source>Sounds Folder</source>
         <translation>Dossier audio</translation>
     </message>
     <message>
-        <location filename="../MusicBrowserView.cpp" line="126"/>
+        <location filename="../MusicBrowserView.cpp" line="225"/>
         <source>iTunes Library</source>
         <translation>Bibliothèque iTunes</translation>
     </message>
@@ -27,17 +32,17 @@
 <context>
     <name>MusicListModel</name>
     <message>
-        <location filename="../MusicListModel.cpp" line="86"/>
+        <location filename="../MusicListModel.cpp" line="82"/>
         <source>Title</source>
         <translation>Titre</translation>
     </message>
     <message>
-        <location filename="../MusicListModel.cpp" line="87"/>
+        <location filename="../MusicListModel.cpp" line="83"/>
         <source>Artist</source>
         <translation>Artiste</translation>
     </message>
     <message>
-        <location filename="../MusicListModel.cpp" line="88"/>
+        <location filename="../MusicListModel.cpp" line="84"/>
         <source>Duration</source>
         <translation>Durée</translation>
     </message>
@@ -45,27 +50,32 @@
 <context>
     <name>PhotoBrowserView</name>
     <message>
-        <location filename="../PhotoBrowserView.cpp" line="84"/>
+        <location filename="../PhotoBrowserView.cpp" line="117"/>
+        <source>Search...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../PhotoBrowserView.cpp" line="164"/>
         <source>iPhoto Library</source>
         <translation>Bibliothèque iPhoto</translation>
     </message>
     <message>
-        <location filename="../PhotoBrowserView.cpp" line="104"/>
+        <location filename="../PhotoBrowserView.cpp" line="184"/>
         <source>Aperture Library</source>
         <translation>Bibliothèque Aperture</translation>
     </message>
     <message>
-        <location filename="../PhotoBrowserView.cpp" line="117"/>
+        <location filename="../PhotoBrowserView.cpp" line="197"/>
         <source>Desktop Pictures</source>
         <translation>Images de fond d&apos;écran</translation>
     </message>
     <message>
-        <location filename="../PhotoBrowserView.cpp" line="125"/>
+        <location filename="../PhotoBrowserView.cpp" line="205"/>
         <source>User Pictures</source>
         <translation>Images d&apos;utilisateur</translation>
     </message>
     <message>
-        <location filename="../PhotoBrowserView.cpp" line="133"/>
+        <location filename="../PhotoBrowserView.cpp" line="213"/>
         <source>Chat Icons</source>
         <translation>Icônes de discussion</translation>
     </message>
@@ -73,7 +83,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../MediaFile.cpp" line="160"/>
+        <location filename="../MediaFile.cpp" line="165"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>

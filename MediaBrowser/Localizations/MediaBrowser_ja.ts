@@ -4,22 +4,27 @@
 <context>
     <name>MusicBrowserView</name>
     <message>
-        <location filename="../MusicBrowserView.cpp" line="94"/>
+        <location filename="../MusicBrowserView.cpp" line="71"/>
+        <source>Search...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MusicBrowserView.cpp" line="193"/>
         <source>iLife Sound Effects</source>
         <translation>iLife サウンドエフェクト</translation>
     </message>
     <message>
-        <location filename="../MusicBrowserView.cpp" line="104"/>
+        <location filename="../MusicBrowserView.cpp" line="203"/>
         <source>iMovie Sound Effects</source>
         <translation>iMovie サウンドエフェクト</translation>
     </message>
     <message>
-        <location filename="../MusicBrowserView.cpp" line="114"/>
+        <location filename="../MusicBrowserView.cpp" line="213"/>
         <source>Sounds Folder</source>
         <translation>サウンドフォルダ</translation>
     </message>
     <message>
-        <location filename="../MusicBrowserView.cpp" line="126"/>
+        <location filename="../MusicBrowserView.cpp" line="225"/>
         <source>iTunes Library</source>
         <translation>
 iTunes ライブラリー</translation>
@@ -28,17 +33,17 @@ iTunes ライブラリー</translation>
 <context>
     <name>MusicListModel</name>
     <message>
-        <location filename="../MusicListModel.cpp" line="86"/>
+        <location filename="../MusicListModel.cpp" line="82"/>
         <source>Title</source>
         <translation>タイトル</translation>
     </message>
     <message>
-        <location filename="../MusicListModel.cpp" line="87"/>
+        <location filename="../MusicListModel.cpp" line="83"/>
         <source>Artist</source>
         <translation>アーティスト</translation>
     </message>
     <message>
-        <location filename="../MusicListModel.cpp" line="88"/>
+        <location filename="../MusicListModel.cpp" line="84"/>
         <source>Duration</source>
         <translation>継続時間</translation>
     </message>
@@ -46,29 +51,34 @@ iTunes ライブラリー</translation>
 <context>
     <name>PhotoBrowserView</name>
     <message>
-        <location filename="../PhotoBrowserView.cpp" line="84"/>
+        <location filename="../PhotoBrowserView.cpp" line="117"/>
+        <source>Search...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../PhotoBrowserView.cpp" line="164"/>
         <source>iPhoto Library</source>
         <translation>
 iPhoto ライブラリー</translation>
     </message>
     <message>
-        <location filename="../PhotoBrowserView.cpp" line="104"/>
+        <location filename="../PhotoBrowserView.cpp" line="184"/>
         <source>Aperture Library</source>
         <translation>
 Aperture ライブラリー</translation>
     </message>
     <message>
-        <location filename="../PhotoBrowserView.cpp" line="117"/>
+        <location filename="../PhotoBrowserView.cpp" line="197"/>
         <source>Desktop Pictures</source>
         <translation>デスクトップピクチャ</translation>
     </message>
     <message>
-        <location filename="../PhotoBrowserView.cpp" line="125"/>
+        <location filename="../PhotoBrowserView.cpp" line="205"/>
         <source>User Pictures</source>
         <translation>ユーザーピクチャ</translation>
     </message>
     <message>
-        <location filename="../PhotoBrowserView.cpp" line="133"/>
+        <location filename="../PhotoBrowserView.cpp" line="213"/>
         <source>Chat Icons</source>
         <translation>チャットアイコン</translation>
     </message>
@@ -76,7 +86,7 @@ Aperture ライブラリー</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../MediaFile.cpp" line="160"/>
+        <location filename="../MediaFile.cpp" line="165"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
