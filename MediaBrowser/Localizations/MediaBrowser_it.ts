@@ -6,27 +6,27 @@
     <message>
         <location filename="../MusicBrowserView.cpp" line="71"/>
         <source>Search...</source>
-        <translation type="unfinished"></translation>
+        <translation>Cerca...</translation>
     </message>
     <message>
         <location filename="../MusicBrowserView.cpp" line="193"/>
         <source>iLife Sound Effects</source>
-        <translation type="unfinished"></translation>
+        <translation>Effetti sonori di iLife</translation>
     </message>
     <message>
         <location filename="../MusicBrowserView.cpp" line="203"/>
         <source>iMovie Sound Effects</source>
-        <translation type="unfinished"></translation>
+        <translation>Effetti sonori di iMovie</translation>
     </message>
     <message>
         <location filename="../MusicBrowserView.cpp" line="213"/>
         <source>Sounds Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Cartella suoni</translation>
     </message>
     <message>
         <location filename="../MusicBrowserView.cpp" line="225"/>
         <source>iTunes Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Libreria di iTunes</translation>
     </message>
 </context>
 <context>
@@ -52,32 +52,32 @@
     <message>
         <location filename="../PhotoBrowserView.cpp" line="117"/>
         <source>Search...</source>
-        <translation type="unfinished"></translation>
+        <translation>Cerca...</translation>
     </message>
     <message>
         <location filename="../PhotoBrowserView.cpp" line="164"/>
         <source>iPhoto Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Libreria di iPhoto</translation>
     </message>
     <message>
         <location filename="../PhotoBrowserView.cpp" line="184"/>
         <source>Aperture Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Libreria di Aperture</translation>
     </message>
     <message>
         <location filename="../PhotoBrowserView.cpp" line="197"/>
         <source>Desktop Pictures</source>
-        <translation type="unfinished"></translation>
+        <translation>Sfondi scrivania</translation>
     </message>
     <message>
         <location filename="../PhotoBrowserView.cpp" line="205"/>
         <source>User Pictures</source>
-        <translation type="unfinished"></translation>
+        <translation>Immagini utente</translation>
     </message>
     <message>
         <location filename="../PhotoBrowserView.cpp" line="213"/>
         <source>Chat Icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Icone chat</translation>
     </message>
 </context>
 <context>
@@ -85,7 +85,7 @@
     <message>
         <location filename="../MediaFile.cpp" line="165"/>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Sconosciuto</translation>
     </message>
 </context>
 <context>
@@ -93,7 +93,7 @@
     <message>
         <location filename="../iPhotoLibraryParser.cpp" line="122"/>
         <source>Albums</source>
-        <translation type="unfinished"></translation>
+        <translation>Album</translation>
     </message>
     <message>
         <location filename="../iPhotoLibraryParser.cpp" line="123"/>

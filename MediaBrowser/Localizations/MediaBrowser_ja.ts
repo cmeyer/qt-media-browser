@@ -6,7 +6,7 @@
     <message>
         <location filename="../MusicBrowserView.cpp" line="71"/>
         <source>Search...</source>
-        <translation type="unfinished"></translation>
+        <translation>検索...</translation>
     </message>
     <message>
         <location filename="../MusicBrowserView.cpp" line="193"/>
@@ -53,7 +53,7 @@ iTunes ライブラリー</translation>
     <message>
         <location filename="../PhotoBrowserView.cpp" line="117"/>
         <source>Search...</source>
-        <translation type="unfinished"></translation>
+        <translation>検索...</translation>
     </message>
     <message>
         <location filename="../PhotoBrowserView.cpp" line="164"/>
@@ -88,7 +88,7 @@ Aperture ライブラリー</translation>
     <message>
         <location filename="../MediaFile.cpp" line="165"/>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>不明</translation>
     </message>
 </context>
 <context>

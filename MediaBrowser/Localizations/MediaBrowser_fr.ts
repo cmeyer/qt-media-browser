@@ -6,7 +6,7 @@
     <message>
         <location filename="../MusicBrowserView.cpp" line="71"/>
         <source>Search...</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechercher...</translation>
     </message>
     <message>
         <location filename="../MusicBrowserView.cpp" line="193"/>
@@ -52,7 +52,7 @@
     <message>
         <location filename="../PhotoBrowserView.cpp" line="117"/>
         <source>Search...</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechercher...</translation>
     </message>
     <message>
         <location filename="../PhotoBrowserView.cpp" line="164"/>
@@ -85,7 +85,7 @@
     <message>
         <location filename="../MediaFile.cpp" line="165"/>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Inconnu</translation>
     </message>
 </context>
 <context>
