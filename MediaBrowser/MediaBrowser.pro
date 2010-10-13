@@ -132,8 +132,8 @@ macx {
         CONFIG += precompile_header
     }
 
-    INCLUDEPATH += ../qt-mobility/install/include/QtMultimediaKit
-    INCLUDEPATH += ../qt-mobility/install/include/QtMobility
+    INCLUDEPATH += $$[QT_INSTALL_HEADERS]/QtMultimediaKit
+    INCLUDEPATH += $$[QT_INSTALL_HEADERS]/QtMobility
 
     target.path = $${MBP_PREFIX}
     INSTALLS += target
