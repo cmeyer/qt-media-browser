@@ -1,7 +1,7 @@
 include(../config.pri)
 
 TEMPLATE = lib
-CONFIG += no_keywords stl
+CONFIG += no_keywords stl absolute_library_soname
 QT += xmlpatterns xml
 INCLUDEPATH += ../boost ..
 INCLUDEPATH += ../taglib/include
