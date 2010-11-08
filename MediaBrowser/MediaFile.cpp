@@ -5,7 +5,7 @@
 #include <QFileInfo>
 #include "MediaFile.h"
 #include "MediaLoader.h"
-#if defined(USE_TAGLIB)
+#if USE_TAGLIB
 #include <fileref.h>
 #include <tag.h>
 #endif
@@ -169,7 +169,7 @@ void MediaFileAudioInfoThread::run()
         }
     }
 #endif
-#if defined(USE_TAGLIB)
+#if USE_TAGLIB
     if (!found)
     {
         try

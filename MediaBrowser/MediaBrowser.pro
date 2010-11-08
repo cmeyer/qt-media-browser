@@ -6,8 +6,6 @@ QT += xmlpatterns xml
 INCLUDEPATH += ../boost ..
 INCLUDEPATH += ../taglib/include
 DEPENDPATH += ../boost
-DEFINES += TAGLIB_STATIC=1 # necessary to avoid linker errors
-DEFINES += USE_TAGLIB=1
 DEFINES += LQ_BUILD_QT=1
 
 CONFIG += debug_and_release build_all
@@ -75,6 +73,9 @@ defineReplace(qtLibraryTarget) {
 TARGET = $$qtLibraryTarget(MediaBrowser)
 
 macx {
+	DEFINES += TAGLIB_STATIC=1 # necessary to avoid linker errors
+	DEFINES += USE_TAGLIB=1
+
     DEFINES += MAC_OS_X_VERSION_MIN_REQUIRED=1040
     #DEFINES += MAC_OS_X_VERSION_MAX_ALLOWED=1040
 
@@ -140,9 +141,11 @@ macx {
 }
 
 win32 {
+	DEFINES += USE_TAGLIB=0
+
     win32-msvc2008 {
-        INCLUDEPATH += C:/QtMobility/include/QtMultimediaKit
-        INCLUDEPATH += C:/QtMobility/include/QtMobility
+        INCLUDEPATH += ../QtMobility/include/QtMultimediaKit
+        INCLUDEPATH += ../QtMobility/include/QtMobility
 
         CONFIG += staticlib
         DEFINES += BOOST_ALL_NO_LIB
@@ -182,7 +185,7 @@ TRANSLATIONS += \
 
 !isEmpty(TRANSLATIONS) {
     isEmpty(QMAKE_LRELEASE) {
-        win32:QMAKE_LRELEASE = $$[QT_INSTALL_BINS]\lrelease.exe
+        win32:QMAKE_LRELEASE = $$[QT_INSTALL_BINS]/lrelease.exe
         else:QMAKE_LRELEASE = $$[QT_INSTALL_BINS]/lrelease
     }
     isEmpty(TS_DIR):TS_DIR = Localizations
