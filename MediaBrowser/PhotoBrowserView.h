@@ -17,6 +17,9 @@ public:
     PhotoBrowserView(QWidget *parent = NULL);
     virtual void addMediaParsers();
 
+    PhotoBrowserListView *photoBrowserListView() const { return m_image_list_view; }
+    QLineEdit *searchField() const { return m_search_field; }
+
 private Q_SLOTS:
     void setCellSize(int size);
     void textChanged(const QString &text);

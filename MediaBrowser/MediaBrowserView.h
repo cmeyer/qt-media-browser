@@ -25,6 +25,8 @@ public:
     MediaBrowserView(QWidget *parent = NULL);
     ~MediaBrowserView();
 
+    QSplitter *splitter() const { return m_splitter; }
+
 protected:
     void setMediaListModel(MediaListModel *media_list_model) { m_media_list_model = media_list_model; }
     MediaListModel *mediaListModel() const { return m_media_list_model; }
