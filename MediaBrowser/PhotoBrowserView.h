@@ -14,7 +14,7 @@ class PhotoBrowserView : public MediaBrowserView
     Q_OBJECT
 
 public:
-    PhotoBrowserView(QWidget *parent = NULL);
+    PhotoBrowserView(Qt::Orientation orientation = Qt::Vertical, QWidget *parent = NULL);
     virtual void addMediaParsers();
 
     PhotoBrowserListView *photoBrowserListView() const { return m_image_list_view; }

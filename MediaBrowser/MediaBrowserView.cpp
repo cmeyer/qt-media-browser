@@ -15,7 +15,7 @@
 #include "PhotoListModel.h"
 #include "MediaParser.h"
 
-MediaBrowserView::MediaBrowserView(QWidget *parent)
+MediaBrowserView::MediaBrowserView(Qt::Orientation orientation, QWidget *parent)
         : QWidget(parent)
         , m_splitter(NULL)
         , m_library_tree_model(NULL)
@@ -33,29 +33,35 @@ MediaBrowserView::MediaBrowserView(QWidget *parent)
     // model at sync() time.
     m_library_tree_controller = m_library_tree_model->libraryTreeController();
 
-    QTreeView *tree = new QTreeView();
-    tree->setHeaderHidden(true);
-    tree->setDragDropMode(QTreeView::DragOnly);
-    tree->setDragEnabled(true);
-    tree->setModel(m_library_tree_model);
+    QTreeView *tree_view = new QTreeView();
+    tree_view->setHeaderHidden(true);
+    tree_view->setDragDropMode(QTreeView::DragOnly);
+    tree_view->setDragEnabled(true);
+    tree_view->setModel(m_library_tree_model);
 
     m_layout = new QVBoxLayout(this);
     m_layout->setContentsMargins(0, 0, 0, 0);
     m_layout->setSpacing(0);
 
     m_splitter = new QSplitter(this);
-    m_splitter->setOrientation(Qt::Vertical);
-    m_splitter->addWidget(tree);
+    m_splitter->setOrientation(orientation);
+    m_splitter->addWidget(tree_view);
     m_splitter->setCollapsible(0, false);
 
     m_layout->addWidget(m_splitter);
+
+    if (orientation == Qt::Horizontal)
+    {
+        tree_view->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+        m_splitter->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+    }
 
     m_sync_timer = new QTimer(this);
     connect(m_sync_timer, SIGNAL(timeout()), this, SLOT(sync()));
     m_sync_timer->start(500);
 
-    connect(tree->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(selectionChanged(QItemSelection,QItemSelection)));
-    connect(tree, SIGNAL(expanded(QModelIndex)), this, SLOT(expanded(QModelIndex)));
+    connect(tree_view->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(selectionChanged(QItemSelection,QItemSelection)));
+    connect(tree_view, SIGNAL(expanded(QModelIndex)), this, SLOT(expanded(QModelIndex)));
 }
 
 MediaBrowserView::~MediaBrowserView()

@@ -51,7 +51,7 @@ void MusicBrowserTreeView::mouseDoubleClickEvent(QMouseEvent *event)
 }
 
 MusicBrowserView::MusicBrowserView(QWidget *parent)
-    : MediaBrowserView(parent)
+    : MediaBrowserView(Qt::Vertical, parent)
     , m_player(NULL)
     , m_play_button(NULL)
 {

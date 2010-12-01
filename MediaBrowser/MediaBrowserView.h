@@ -22,7 +22,7 @@ class MediaBrowserView : public QWidget
     Q_OBJECT
 
 public:
-    MediaBrowserView(QWidget *parent = NULL);
+    MediaBrowserView(Qt::Orientation orientation = Qt::Vertical, QWidget *parent = NULL);
     ~MediaBrowserView();
 
     QSplitter *splitter() const { return m_splitter; }

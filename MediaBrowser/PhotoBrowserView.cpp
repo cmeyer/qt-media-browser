@@ -52,8 +52,8 @@ void PhotoBrowserListView::paintEvent(QPaintEvent *event)
     QListView::paintEvent(event);
 }
 
-PhotoBrowserView::PhotoBrowserView(QWidget *parent)
-    : MediaBrowserView(parent)
+PhotoBrowserView::PhotoBrowserView(Qt::Orientation orientation, QWidget *parent)
+    : MediaBrowserView(orientation, parent)
 {
     QString style_sheet;
     QTextStream ss(&style_sheet);
@@ -111,15 +111,15 @@ PhotoBrowserView::PhotoBrowserView(QWidget *parent)
     size_slider->setMaximum(192);
     size_slider->setValue(icon_size.width());
     size_slider->setMinimumWidth(40);
-    size_slider->setMaximumWidth(80);
+    size_slider->setMaximumWidth((orientation == Qt::Vertical) ? 80 : 200);
     size_slider->setOrientation(Qt::Horizontal);
 
     m_search_field = new SearchField(tr("Search..."));
-    m_search_field->adjustSize();
+    m_search_field->setMaximumWidth(240);
 
-    search_box_layout->addWidget(size_slider);
-    search_box_layout->addSpacerItem(new QSpacerItem(4, 4, QSizePolicy::Expanding, QSizePolicy::Minimum));
     search_box_layout->addWidget(m_search_field);
+    search_box_layout->addSpacerItem(new QSpacerItem(4, 4, QSizePolicy::Expanding, QSizePolicy::Minimum));
+    search_box_layout->addWidget(size_slider);
 
     m_layout->addWidget(search_box);
 
