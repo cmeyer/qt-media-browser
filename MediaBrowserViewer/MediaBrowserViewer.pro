@@ -92,7 +92,7 @@ macx {
     LINKLIBS += \
         ../taglib/taglib/build/$$LINKLIBDIR/libTagLib.a
     POST_TARGETDEPS += $$LINKLIBS
-    LIBS += -F../MediaBrowser/build/$$LINKLIBDIR -framework MediaBrowser -framework QtMultimediaKit
+    LIBS += -F../MediaBrowser/build/lib -framework MediaBrowser -framework QtMultimediaKit
     LIBS += $$LINKLIBS -framework QuickTime -framework Carbon -framework Cocoa -framework CoreFoundation
     QMAKE_CFLAGS_WARN_ON = -Wreturn-type  -Wunused-variable
     QMAKE_CXXFLAGS_WARN_ON = -Wreturn-type -Wunused-variable

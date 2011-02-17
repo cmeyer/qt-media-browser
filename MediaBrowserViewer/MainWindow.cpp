@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     const int media_width = 310;
 
-    PhotoBrowserView *photo_browser_view = new PhotoBrowserView(this);
+    PhotoBrowserView *photo_browser_view = new PhotoBrowserView(Qt::Vertical);
     photo_browser_view->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::MinimumExpanding);
     photo_browser_view->setMinimumSize(media_width, 370);
 
