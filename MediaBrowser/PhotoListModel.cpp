@@ -61,13 +61,6 @@ void PhotoListModel::resetTasks(const QModelIndexList &index_list)
     {
         data(index, Qt::DecorationRole);
     }
-
-    // now the rest of the items
-    for(int i=0; i<rowCount(); i++)
-    {
-        QModelIndex index = this->index(i,0);
-        data(index, Qt::DecorationRole);
-    }
 }
 
 void PhotoListModel::setFontMetrics(const QFontMetrics &font_metrics)

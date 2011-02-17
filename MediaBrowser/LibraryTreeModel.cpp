@@ -118,7 +118,7 @@ QMimeData *LibraryTreeModel::mimeData(const QModelIndexList &indexes) const
         
         Q_FOREACH(MediaFilePtr media_file, media_files)
         {
-            urls.append(QUrl::fromLocalFile(media_file->filePath()));
+            urls.append(QUrl::fromLocalFile(media_file->resolvedFilePath()));
         }
     }
     

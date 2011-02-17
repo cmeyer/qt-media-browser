@@ -85,7 +85,7 @@ private:
 
 void MediaFileIconThread::run()
 {
-    QImageReader image_reader(m_media_file->filePath());
+    QImageReader image_reader(m_media_file->resolvedFilePath());
     QSize size = image_reader.size();
     QSize scaled_size = FitToAspectRatio(QRectF(QPointF(), QSizeF(192,144)), (float)size.width()/size.height()).toRect().size();
     if (scaled_size.width() == 0 || scaled_size.height() == 0)
@@ -115,7 +115,7 @@ private:
 
 void MediaFileAudioInfoThread::run()
 {
-    QString file_path = m_media_file->filePath();
+    QString file_path = m_media_file->resolvedFilePath();
     QString title = m_media_file->audioInfo().title();  // use existing title unless a better one is available
     QString artist;
     unsigned duration = 0;
@@ -227,6 +227,11 @@ void MediaFile::loadIcon(MediaLoader *media_loader, MediaBrowserPrivate::TaskGro
 }
 
 QString MediaFile::filePath() const
+{
+    return m_file_path;
+}
+
+QString MediaFile::resolvedFilePath() const
 {
 #if defined(Q_OS_MAC)
     // handle aliases

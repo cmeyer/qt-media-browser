@@ -90,7 +90,7 @@ QVariant MediaListModel::data(const QModelIndex &index, int role) const
 
     if (role == FullPathRole)
     {
-        return media_file->filePath();
+        return media_file->resolvedFilePath();
     }
 
     if (role == SortRole)

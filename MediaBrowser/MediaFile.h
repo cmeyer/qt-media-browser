@@ -34,6 +34,7 @@ public:
     MediaFile(const QString &file_path);
 
     QString filePath() const;
+    QString resolvedFilePath() const;
 
     QIcon icon(const QSize &icon_size) const;
     void loadIcon(MediaLoader *media_loader, MediaBrowserPrivate::TaskGroupPtr task_group);
