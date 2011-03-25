@@ -2,6 +2,8 @@
 #include <QDesktopServices>
 #include <QHBoxLayout>
 #include <QListView>
+#include <QMouseEvent>
+#include <QPainter>
 #include <QSettings>
 #include <QSlider>
 #include <QSortFilterProxyModel>
@@ -16,19 +18,6 @@
 #include "ApertureLibraryParser.h"
 #include "MacUtility.h"
 #endif
-
-class PhotoBrowserListView : public QListView
-{
-public:
-    PhotoBrowserListView(PhotoListModel *photo_list_model, QSortFilterProxyModel *proxy_photo_list_model)
-        : m_photo_list_model(photo_list_model)
-        , m_proxy_photo_list_model(proxy_photo_list_model)
-    { }
-    void paintEvent(QPaintEvent *event);
-private:
-    PhotoListModel *m_photo_list_model;
-    QSortFilterProxyModel *m_proxy_photo_list_model;
-};
 
 void PhotoBrowserListView::paintEvent(QPaintEvent *event)
 {
@@ -50,6 +39,78 @@ void PhotoBrowserListView::paintEvent(QPaintEvent *event)
     }
 
     QListView::paintEvent(event);
+}
+
+PhotoBrowserListView::ItemViewPaintPairs PhotoBrowserListView::draggablePaintPairs(const QModelIndexList &indexes, QRect *r) const
+{
+    QRect &rect = *r;
+    const QRect viewportRect = viewport()->rect();
+    PhotoBrowserListView::ItemViewPaintPairs ret;
+    for (int i = 0; i < indexes.count(); ++i)
+    {
+        const QModelIndex &index = indexes.at(i);
+        const QRect current = visualRect(index);
+        if (current.intersects(viewportRect))
+        {
+            ret += qMakePair(current, index);
+            rect |= current;
+        }
+    }
+    rect &= viewportRect;
+    return ret;
+}
+
+QPixmap PhotoBrowserListView::renderToPixmap(const QModelIndexList &indexes, QRect *r) const
+{
+    ItemViewPaintPairs paintPairs = draggablePaintPairs(indexes, r);
+    if (paintPairs.isEmpty())
+        return QPixmap();
+    QPixmap pixmap(r->size());
+    pixmap.fill(Qt::transparent);
+    QPainter painter(&pixmap);
+    painter.setOpacity(0.5);
+    QStyleOptionViewItemV4 option = viewOptions();
+    option.state |= QStyle::State_Selected;
+    for (int j = 0; j < paintPairs.count(); ++j)
+    {
+        option.rect = paintPairs.at(j).first.translated(-r->topLeft());
+        const QModelIndex &current = paintPairs.at(j).second;
+        itemDelegate(current)->paint(&painter, option, current);
+    }
+    return pixmap;
+}
+
+void PhotoBrowserListView::mousePressEvent(QMouseEvent *event)
+{
+    m_pressed_position = event->pos() + offset();
+    
+    QListView::mousePressEvent(event);
+}
+
+void PhotoBrowserListView::startDrag(Qt::DropActions supportedActions)
+{
+    // copied from QAbstractItemView::startDrag(supportedActions);
+
+    QModelIndexList indexes = selectedIndexes();
+    if (indexes.count() > 0)
+    {
+        QMimeData *data = model()->mimeData(indexes);
+        if (!data) return;
+        QRect rect;
+        QPixmap pixmap = renderToPixmap(indexes, &rect);
+        rect.adjust(horizontalOffset(), verticalOffset(), 0, 0);
+        QDrag *drag = new QDrag(this);
+        drag->setPixmap(pixmap);
+        drag->setMimeData(data);
+        drag->setHotSpot(m_pressed_position - rect.topLeft());
+        Qt::DropAction action = Qt::IgnoreAction;
+        if (defaultDropAction() != Qt::IgnoreAction && (supportedActions & defaultDropAction()))
+            action = defaultDropAction();
+        else if (supportedActions & Qt::CopyAction && dragDropMode() != QAbstractItemView::InternalMove)
+            action = Qt::CopyAction;
+        if (drag->exec(supportedActions, action) == Qt::MoveAction)
+            ; // d->clearOrRemove();
+    }
 }
 
 PhotoBrowserView::PhotoBrowserView(Qt::Orientation orientation, QWidget *parent)
