@@ -121,7 +121,7 @@ void iTunesLibraryParserThread::parse()
                             QMultiMap<QString, QVariant> track_info = track_dict.toMap();
                             QString track_id = track_info.value("Track ID").toString().trimmed();
                             AudioMediaFileInfo audio_media_file_info = m_tracks[track_id];
-                            MediaFilePtr media_file(new MediaFile(audio_media_file_info.filePath()));
+                            MediaFilePtr media_file(new MediaFile(audio_media_file_info.filePath(), QLatin1String("itunes")));
                             media_file->setAudioInfo(audio_media_file_info);
                             m_library_tree_controller->appendMediaFile(library_tree_item, media_file);
                         }

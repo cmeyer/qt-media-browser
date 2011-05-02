@@ -84,7 +84,7 @@ public:
     LibraryTreeItemPtr appendChild(LibraryTreeItemPtr parent, const QString &title, LibraryTreeItemPromisePtr promise = LibraryTreeItemPromisePtr());
 
     // thread safe calls to invoke from parsers
-    void appendFile(LibraryTreeItemPtr library_tree_item, const QString &file_path);
+    void appendFile(LibraryTreeItemPtr library_tree_item, const QString &file_path, const QString &source);
     void appendMediaFile(LibraryTreeItemPtr library_tree_item, MediaFilePtr media_file);
 
     LibraryTreeItemPtr liveRootLibraryTreeItem() const { return m_live_root_item; }

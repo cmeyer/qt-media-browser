@@ -109,6 +109,7 @@ QMimeData *LibraryTreeModel::mimeData(const QModelIndexList &indexes) const
     QMimeData *mimeData = new QMimeData();
     
     QList<QUrl> urls;
+    QString sources;
 
     Q_FOREACH(QModelIndex index, indexes)
     {
@@ -119,11 +120,14 @@ QMimeData *LibraryTreeModel::mimeData(const QModelIndexList &indexes) const
         Q_FOREACH(MediaFilePtr media_file, media_files)
         {
             urls.append(QUrl::fromLocalFile(media_file->resolvedFilePath()));
+            if (!sources.contains(media_file->source()))
+                sources.append(QLatin1String(" ") + media_file->source());
         }
     }
     
     mimeData->setUrls(urls);
-    
+    mimeData->setData(QLatin1String("mac-extra/source-list"), sources.simplified().toUtf8());
+
     return mimeData;
 }
 

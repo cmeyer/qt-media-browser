@@ -172,15 +172,22 @@ QMimeData *MediaListModel::mimeData(const QModelIndexList &indexes) const
     QMimeData *mimeData = new QMimeData();
     
     QList<QUrl> urls;
-    
-    Q_FOREACH(QModelIndex index, indexes) {
-        if (index.isValid() && index.column() == 0) {
-            QString file_path = qVariantValue<QString>(data(index, FullPathRole));
-            urls.push_back(QUrl::fromLocalFile(file_path));
+    QString sources;
+
+    Q_FOREACH(QModelIndex index, indexes)
+    {
+        if (index.isValid() && index.column() == 0)
+        {
+            MediaFilePtr media_file = m_library_tree_item->mediaFileAt(index.row());
+            QString file_path = media_file->resolvedFilePath();
+            urls.append(QUrl::fromLocalFile(file_path));
+            if (!sources.contains(media_file->source()))
+                sources.append(QLatin1String(" ") + media_file->source());
         }
     }
 
     mimeData->setUrls(urls);
+    mimeData->setData(QLatin1String("mac-extra/source-list"), sources.simplified().toUtf8());
 
     return mimeData;
 }

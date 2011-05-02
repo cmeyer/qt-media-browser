@@ -138,7 +138,7 @@ void ApertureLibraryParserThread::parsePhotoList(LibraryTreeItemPtr base_library
         {
             if (m_cancel) break;
             if (m_photos.contains(key))
-                m_library_tree_controller->appendFile(base_library_tree_item, m_photos[key]);
+                m_library_tree_controller->appendFile(base_library_tree_item, m_photos[key], QLatin1String("aperture"));
         }
     }
 }

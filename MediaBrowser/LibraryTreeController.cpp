@@ -91,9 +91,10 @@ LibraryTreeItemPtr LibraryTreeController::appendChild(LibraryTreeItemPtr parent,
     return item;
 }
 
-void LibraryTreeController::appendFile(LibraryTreeItemPtr library_tree_item, const QString &file_path)
+// append file is a convenience function that create a MediaFile object and appends it.
+void LibraryTreeController::appendFile(LibraryTreeItemPtr library_tree_item, const QString &file_path, const QString &source)
 {
-    MediaFilePtr media_file(new MediaFile(file_path));
+    MediaFilePtr media_file(new MediaFile(file_path, source));
 
     appendMediaFile(library_tree_item, media_file);
 }

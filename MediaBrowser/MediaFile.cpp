@@ -206,8 +206,9 @@ void MediaFileAudioInfoThread::wasRemoved()
     m_media_file->resetAudioInfo();
 }
 
-MediaFile::MediaFile(const QString &file_path)
+MediaFile::MediaFile(const QString &file_path, const QString &source)
     : m_file_path(file_path)
+    , m_source(source)
     , m_icon_loading(false)
     , m_icon_loaded(false)
     , m_audio_info_loading(false)
@@ -239,6 +240,11 @@ QString MediaFile::resolvedFilePath() const
 #else
     return m_file_path;
 #endif
+}
+
+QString MediaFile::source() const
+{
+    return m_source;
 }
 
 QIcon MediaFile::icon(const QSize &icon_size) const

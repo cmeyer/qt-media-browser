@@ -31,10 +31,11 @@ private:
 class MediaFile : public boost::enable_shared_from_this<MediaFile>
 {
 public:
-    MediaFile(const QString &file_path);
+    MediaFile(const QString &file_path, const QString &source);
 
     QString filePath() const;
     QString resolvedFilePath() const;
+    QString source() const;
 
     QIcon icon(const QSize &icon_size) const;
     void loadIcon(MediaLoader *media_loader, MediaBrowserPrivate::TaskGroupPtr task_group);
@@ -44,6 +45,7 @@ public:
 
 private:
     QString m_file_path;
+    QString m_source;
 
     mutable QMutex m_icon_mutex;
     mutable QIcon m_icon;

@@ -168,7 +168,7 @@ void FolderParserTask::parseDirectory(const QString &directory_path, const QStri
     {
         if (m_folder_parser->filterFile(directory_path))
         {
-            m_library_tree_controller->appendFile(parent_library_tree_item, directory_path);
+            m_library_tree_controller->appendFile(parent_library_tree_item, directory_path, QLatin1String("folder"));
         }
     }
 }

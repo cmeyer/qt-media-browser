@@ -95,7 +95,7 @@ void iPhotoLibraryParserThread::parsePhotoList(QSettings &plist, LibraryTreeItem
                 {
                     QString photo_id = photo_id_str.trimmed();
                     if (m_photos.contains(photo_id))
-                        m_library_tree_controller->appendFile(library_tree_item, m_photos[photo_id]);
+                        m_library_tree_controller->appendFile(library_tree_item, m_photos[photo_id], QLatin1String("iphoto"));
                     if (m_cancel) break;
                 }
             }
