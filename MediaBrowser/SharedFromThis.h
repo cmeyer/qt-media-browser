@@ -12,7 +12,7 @@
 #include <QtCore/QSharedPointer>
 
 template<typename T>
-class QSharedFromThis
+class SharedFromThis
 {
 public:
 
