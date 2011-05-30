@@ -48,6 +48,7 @@ HEADERS += \
     PhotoBrowserView.h \
     PhotoFolderParser.h \
     PhotoListModel.h \
+    SharedFromThis.h \
     SearchField.h \
     TaskGroup.h \
     TaskPool.h \
@@ -74,7 +75,7 @@ TARGET = $$qtLibraryTarget(MediaBrowser)
 
 macx {
 	DEFINES += TAGLIB_STATIC=1 # necessary to avoid linker errors
-	DEFINES += USE_TAGLIB=1
+    DEFINES += USE_TAGLIB=0
 
     DEFINES += MAC_OS_X_VERSION_MIN_REQUIRED=1040
     #DEFINES += MAC_OS_X_VERSION_MAX_ALLOWED=1040

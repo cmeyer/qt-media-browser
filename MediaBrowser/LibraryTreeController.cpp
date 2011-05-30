@@ -74,6 +74,7 @@ LibraryTreeController::LibraryTreeController(LibraryTreeModel *library_tree_mode
     m_display_root_item = display_root_item;
 }
 
+// record the "append child folder" action into the library tree action list.
 LibraryTreeItemPtr LibraryTreeController::appendChild(LibraryTreeItemPtr parent, const QString &title, LibraryTreeItemPromisePtr promise)
 {
     // mutex must be locked while modifying the tree
@@ -99,6 +100,7 @@ void LibraryTreeController::appendFile(LibraryTreeItemPtr library_tree_item, con
     appendMediaFile(library_tree_item, media_file);
 }
 
+// record the "append media file" action into the library tree action list.
 void LibraryTreeController::appendMediaFile(LibraryTreeItemPtr library_tree_item, MediaFilePtr media_file)
 {
     // mutex must be locked while modifying the tree

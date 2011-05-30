@@ -48,7 +48,7 @@ public:
 typedef boost::shared_ptr<LibraryTreeAction> LibraryTreeActionPtr;
 typedef std::list<LibraryTreeActionPtr> LibraryTreeActionList;
 
-// append a child directory
+// represents the action to append a child folder.
 class LibraryTreeAppendChildAction : public LibraryTreeAction
 {
 public:
@@ -60,7 +60,7 @@ private:
     LibraryTreeItemPromisePtr m_promise;
 };
 
-// append a media file
+// represents the action to append a media file.
 class LibraryTreeAppendMediaFile : public LibraryTreeAction
 {
 public:
@@ -81,19 +81,28 @@ class LibraryTreeController : public boost::enable_shared_from_this<LibraryTreeC
 public:
     LibraryTreeController(LibraryTreeModel *library_tree_model);
 
+    // thread safe calls to invoke from parsers
+
+    // record the "append child folder" action. callers can optionally pass a promise which will be used to fill out the
+    // children of the folder in the case the user opens the folder.
     LibraryTreeItemPtr appendChild(LibraryTreeItemPtr parent, const QString &title, LibraryTreeItemPromisePtr promise = LibraryTreeItemPromisePtr());
 
-    // thread safe calls to invoke from parsers
-    void appendFile(LibraryTreeItemPtr library_tree_item, const QString &file_path, const QString &source);
+    // record the "append media file" action.
     void appendMediaFile(LibraryTreeItemPtr library_tree_item, MediaFilePtr media_file);
+
+    // convenience function which creates a media file object from the file path and source and calls append media file
+    void appendFile(LibraryTreeItemPtr library_tree_item, const QString &file_path, const QString &source);
+
+    // accessors
 
     LibraryTreeItemPtr liveRootLibraryTreeItem() const { return m_live_root_item; }
     LibraryTreeItemPtr displayRootLibraryTreeItem() const { return m_display_root_item; }
 
-    // this call must be made from the main user interface thread
+    // this call must be made from the main user interface thread. it synchronizes the live tree (which might be
+    // changing very actively from threads) with the display tree (which is guaranteed to only change on the main thread).
     void sync();
 
-    // parsers are free to partially populate the tree. if they do this, they must provide
+    // parsers can partially populate the tree. if they do this, they must provide
     // a promise to populate further if the display requires it. this method will be invoked
     // to fulfill that promise. it calls populate on the item with this objct as a parameter.
     void populateItem(LibraryTreeItemPtr item);

@@ -1,15 +1,12 @@
 #ifndef MEDIA_BROWSER_FOLDER_PARSER_H
 #define MEDIA_BROWSER_FOLDER_PARSER_H
 
-#include <list>
 #include <boost/smart_ptr.hpp>
 #include "MediaParser.h"
 #include "TaskGroup.h"
 
 class QFileInfo;
 class QString;
-
-typedef boost::shared_ptr<class LibraryTreeController> LibraryTreeControllerPtr;
 
 typedef boost::shared_ptr<class LibraryTreeItem> LibraryTreeItemPtr;
 
