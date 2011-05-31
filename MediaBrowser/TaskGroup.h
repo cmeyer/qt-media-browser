@@ -1,5 +1,5 @@
-#ifndef __TASK_GROUP_H
-#define __TASK_GROUP_H
+#ifndef MEDIA_BROWSER_TASK_GROUP_H
+#define MEDIA_BROWSER_TASK_GROUP_H
 
 #include "TaskPool.h"
 
@@ -27,4 +27,4 @@ typedef boost::shared_ptr<TaskGroup> TaskGroupPtr;
 
 } /* MediaBrowserPrivate */
 
-#endif
+#endif  //  MEDIA_BROWSER_TASK_GROUP_H

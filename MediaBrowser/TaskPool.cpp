@@ -1,6 +1,5 @@
 #include "TaskPool.h"
 
-#include <boost/foreach.hpp>
 
 #include <QQueue>
 #include <QMutex>
@@ -81,7 +80,7 @@ namespace MediaBrowserPrivate {
     {
         QMutexLocker lock(&m_queue_lock);
 
-        BOOST_FOREACH(TaskPtr task, tasks)
+        Q_FOREACH(TaskPtr task, tasks)
         {
             std::deque<TaskPtr>::iterator iter = find(m_queue.begin(), m_queue.end(), task);
 
@@ -170,7 +169,7 @@ namespace MediaBrowserPrivate {
         {
             QMutexLocker lock(&m_queue_lock);
 
-            BOOST_FOREACH(TaskPtr task, tasks)
+            Q_FOREACH(TaskPtr task, tasks)
             {
                 std::deque<TaskPtr>::iterator iter = find(m_queue.begin(), m_queue.end(), task);
 
@@ -190,13 +189,13 @@ namespace MediaBrowserPrivate {
         }
 
         // next cancel the running tasks
-        BOOST_FOREACH(TaskPtr task, tasks_to_wait)
+        Q_FOREACH(TaskPtr task, tasks_to_wait)
         {
             task->setCancelFlag(true);
         }
 
         // and wait for them
-        BOOST_FOREACH(TaskPtr task, tasks_to_wait)
+        Q_FOREACH(TaskPtr task, tasks_to_wait)
         {
             task->wait();
         }

@@ -1,4 +1,3 @@
-#include <boost/foreach.hpp>
 #include "TaskGroup.h"
 
 namespace MediaBrowserPrivate {
@@ -18,7 +17,7 @@ void TaskGroup::start()
 {
     if (!m_started)
     {
-        BOOST_FOREACH(TaskPtr task, m_tasks)
+        Q_FOREACH(TaskPtr task, m_tasks)
         {
             m_task_pool->addTask(task);
         }

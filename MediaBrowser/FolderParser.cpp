@@ -1,4 +1,3 @@
-#include <boost/foreach.hpp>
 #include <QDebug>
 #include <QDirIterator>
 #include <QFileInfo>

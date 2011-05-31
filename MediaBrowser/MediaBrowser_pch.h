@@ -2,7 +2,6 @@
 #include <deque>
 #include <list>
 #include <vector>
-#include <boost/foreach.hpp>
 #include <boost/smart_ptr.hpp>
 #if defined(Q_OS_MAC)
 #include <Foundation/NSAutoreleasePool.h>

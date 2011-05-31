@@ -26,7 +26,7 @@ void PhotoBrowserListView::paintEvent(QPaintEvent *event)
 
     if (first_index >= 0)
     {
-        last_index = std::min(last_index, model()->rowCount() - 1);
+        last_index = qMin(last_index, model()->rowCount() - 1);
 
         // build the 'mapped to source' index list
         QModelIndexList index_list;

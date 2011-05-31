@@ -1,4 +1,3 @@
-#include <boost/foreach.hpp>
 #include "LibraryTreeController.h"
 #include "LibraryTreeItem.h"
 #include "LibraryTreeModel.h"
@@ -12,7 +11,7 @@ LibraryTreeItemIndex::LibraryTreeItemIndex(LibraryTreeItemPtr library_tree_item)
 LibraryTreeItemPtr LibraryTreeItemIndex::resolve(LibraryTreeItemPtr library_tree_root_item)
 {
     LibraryTreeItemPtr library_tree_item = library_tree_root_item;
-    BOOST_FOREACH(unsigned index, m_index_list)
+    Q_FOREACH(unsigned index, m_index_list)
     {
         library_tree_item = library_tree_item->child(index);
     }
@@ -22,7 +21,7 @@ LibraryTreeItemPtr LibraryTreeItemIndex::resolve(LibraryTreeItemPtr library_tree
 QModelIndex LibraryTreeItemIndex::resolve(LibraryTreeModel *model)
 {
     QModelIndex model_index;
-    BOOST_FOREACH(unsigned index, m_index_list)
+    Q_FOREACH(unsigned index, m_index_list)
     {
         model_index = model->index(index, 0, model_index);
     }
@@ -142,7 +141,7 @@ void LibraryTreeController::sync()
 {
     QMutexLocker locker(&m_library_tree_action_list_mutex);
 
-    BOOST_FOREACH(LibraryTreeActionPtr library_tree_action, m_library_tree_action_list)
+    Q_FOREACH(LibraryTreeActionPtr library_tree_action, m_library_tree_action_list)
     {
         library_tree_action->execute(displayRootLibraryTreeItem(), m_library_tree_model);
     }

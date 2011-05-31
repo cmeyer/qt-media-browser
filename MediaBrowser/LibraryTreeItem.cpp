@@ -1,4 +1,3 @@
-#include <boost/foreach.hpp>
 
 #include "LibraryTreeItem.h"
 #include "MediaListModel.h" // ugh
@@ -72,7 +71,7 @@ unsigned LibraryTreeItem::indexOfMediaFile(MediaFilePtr media_file) const
 
 void LibraryTreeItem::populate(LibraryTreeControllerPtr library_tree_controller)
 {
-    BOOST_FOREACH(LibraryTreeItemPtr child, m_children)
+    Q_FOREACH(LibraryTreeItemPtr child, m_children)
     {
         child->executePromise(library_tree_controller);
     }
