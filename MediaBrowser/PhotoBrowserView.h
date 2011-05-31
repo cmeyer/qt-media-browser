@@ -11,6 +11,8 @@ class QSortFilterProxyModel;
 class PhotoListModel;
 class PhotoBrowserListView;
 
+// the photo browser. includes the photo browser list view and a search field.
+
 class PhotoBrowserView : public MediaBrowserView
 {
     Q_OBJECT
@@ -32,6 +34,8 @@ private:
     QSortFilterProxyModel *m_proxy_photo_list_model;
     QLineEdit *m_search_field;
 };
+
+// the list of photo icons in the browser portion of the user interface.
 
 class PhotoBrowserListView : public QListView
 {

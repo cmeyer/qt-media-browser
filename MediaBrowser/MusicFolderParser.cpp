@@ -3,7 +3,7 @@
 #include "MusicFolderParser.h"
 
 MusicFolderParser::MusicFolderParser(LibraryTreeControllerPtr library_tree_controller, const QString &file_path, const QString &display_name)
-        : FolderParser(library_tree_controller, file_path, display_name)
+    : FolderParser(library_tree_controller, file_path, display_name)
 {
 }
 

@@ -3,6 +3,8 @@
 
 #include "FolderParser.h"
 
+// parse a music folder and add items to the live portion of the libary tree controller.
+
 class MusicFolderParser : public FolderParser
 {
 public:

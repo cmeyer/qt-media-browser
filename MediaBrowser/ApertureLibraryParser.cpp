@@ -166,7 +166,6 @@ void ApertureLibraryParserThread::run()
 }
 
 ApertureLibraryParser::ApertureLibraryParser(LibraryTreeControllerPtr library_tree_controller, const QString &file_path, const QString &display_name)
-        : MediaParser(library_tree_controller)
 {
     boost::shared_ptr<ApertureLibraryParserThread> aperture_library_parser_thread(new ApertureLibraryParserThread(this, library_tree_controller, file_path, display_name));
     m_aperture_library_parser_thread = aperture_library_parser_thread;

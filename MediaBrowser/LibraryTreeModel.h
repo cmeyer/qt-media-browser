@@ -4,8 +4,12 @@
 #include <boost/smart_ptr.hpp>
 #include <QAbstractItemModel>
 
-class LibraryTreeController;
-typedef boost::shared_ptr<LibraryTreeController> LibraryTreeControllerPtr;
+typedef boost::shared_ptr<class LibraryTreeController> LibraryTreeControllerPtr;
+
+// the library tree model is the Qt model used to display the hierarchy of libraries
+// and folders within those libraries. it is connected to a QTreeView in the media
+// browser view. it gets its data from a the library tree controller's display root
+// library tree item.
 
 class LibraryTreeModel : public QAbstractItemModel
 {

@@ -4,6 +4,8 @@
 #include "MediaListModel.h"
 #include "TaskGroup.h"
 
+// a subclass of the media list model for music.
+
 class MusicListModel : public MediaListModel
 {
     Q_OBJECT

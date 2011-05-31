@@ -13,6 +13,8 @@ class QTreeView;
 
 class MusicListModel;
 
+// the music browser. includes the music browser list view, search field, and sorting facilities.
+
 class MusicBrowserView : public MediaBrowserView
 {
     Q_OBJECT
@@ -41,6 +43,8 @@ private:
     QLineEdit *m_search_field;
     QToolButton *m_play_button;
 };
+
+// the tree view of music.
 
 class MusicBrowserTreeView : public QTreeView
 {

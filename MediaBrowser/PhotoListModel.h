@@ -6,6 +6,8 @@
 #include "MediaListModel.h"
 #include "TaskGroup.h"
 
+// a subclass of the media list model for photos.
+
 class PhotoListModel : public MediaListModel
 {
     Q_OBJECT
@@ -23,7 +25,7 @@ public:
     void setFontMetrics(const QFontMetrics &font_metrics);
     void setIconSize(const QSize &icon_size);
 
-    QSize cellSize() const;
+    QSize cellSize() const; // returns cell size based on font metrics and icon size.
 
 private:
     MediaLoaderPtr m_media_loader;

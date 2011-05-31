@@ -6,6 +6,8 @@
 #include <QString>
 #include <QVariant>
 
+// forward definitions
+
 typedef boost::shared_ptr<class MediaFile> MediaFilePtr;
 typedef std::vector<MediaFilePtr> MediaFileArray;
 
@@ -14,11 +16,17 @@ typedef std::vector<LibraryTreeItemPtr> LibraryTreeItemArray;
 
 typedef boost::shared_ptr<class LibraryTreeController> LibraryTreeControllerPtr;
 
-const unsigned INDEX_NOT_FOUND = 0x7FFFFFFF;
-
 typedef boost::shared_ptr<class LibraryTreeItemPromise> LibraryTreeItemPromisePtr;
 
 class MediaListModel;
+
+// constant definitions
+
+const unsigned INDEX_NOT_FOUND = 0x7FFFFFFF;
+
+// the library tree item is a node in the library tree. it contains media files and other
+// library tree items (children). it provides methods to add children, add media items, examine
+// children and media items, and fulfill promises.
 
 class LibraryTreeItem : public boost::enable_shared_from_this<LibraryTreeItem>
 {
@@ -57,6 +65,12 @@ private:
     LibraryTreeItemPromisePtr m_promise;
     MediaListModel *m_media_list_model_watcher;
 };
+
+// the library tree item promise is an abstract class that allows parsers to promise to
+// fill out a sub-folder when then user opens it in the UI. subclasses need to keep track
+// of the object that they need to complete. promises only get fulfilled on the live tree,
+// never the display tree. the information gets updated to the display tree at sync time,
+// as usual.
 
 class LibraryTreeItemPromise
 {

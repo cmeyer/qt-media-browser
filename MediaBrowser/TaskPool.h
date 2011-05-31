@@ -26,11 +26,10 @@ namespace MediaBrowserPrivate {
     };
     
     typedef AutoMemoryPool ThreadInitializer;
-
-    class TaskPool;
-
-    typedef boost::shared_ptr<TaskPool> TaskPoolPtr;
-
+    
+    typedef boost::shared_ptr<class Task> TaskPtr;
+    typedef std::list<TaskPtr> TaskList;
+    
     class Task : boost::noncopyable
     {
     public:
@@ -58,9 +57,10 @@ namespace MediaBrowserPrivate {
         friend class TaskPool;
     };
 
-    typedef boost::shared_ptr<Task> TaskPtr;
-    typedef std::list<TaskPtr> TaskList;
-
+    // TODO: add constant for 'auto thread count' to maximize processor usage
+    
+    typedef boost::shared_ptr<class TaskPool> TaskPoolPtr;
+    
     class TaskPool : boost::noncopyable
     {
     public:

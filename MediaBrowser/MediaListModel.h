@@ -4,14 +4,15 @@
 #include <boost/smart_ptr.hpp>
 #include <QAbstractItemModel>
 
-class LibraryTreeItem;
-typedef boost::shared_ptr<LibraryTreeItem> LibraryTreeItemPtr;
+typedef boost::shared_ptr<class LibraryTreeItem> LibraryTreeItemPtr;
 
-class MediaFile;
-typedef boost::shared_ptr<MediaFile> MediaFilePtr;
+typedef boost::shared_ptr<class MediaFile> MediaFilePtr;
 
-class MediaLoader;
-typedef boost::shared_ptr<MediaLoader> MediaLoaderPtr;
+typedef boost::shared_ptr<class MediaLoader> MediaLoaderPtr;
+
+// the media list model is the base class for more specific media models such
+// as the music list model or the photo list model. it handles basic abstract
+// list model tasks such as drag and drop.
 
 class MediaListModel : public QAbstractListModel
 {

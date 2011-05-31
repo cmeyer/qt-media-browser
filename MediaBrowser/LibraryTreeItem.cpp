@@ -48,7 +48,6 @@ unsigned LibraryTreeItem::row() const
         LibraryTreeItemArray::const_iterator iter = std::find(m_parent->m_children.begin(), m_parent->m_children.end(), shared_from_this());
         if (iter != m_parent->m_children.end())
             return iter - m_parent->m_children.begin();
-//            return std::distance(m_parent->m_children.begin(), iter);
     }
 
     //assert(false);

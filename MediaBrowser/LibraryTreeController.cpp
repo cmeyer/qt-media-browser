@@ -47,6 +47,18 @@ LibraryTreeAction::~LibraryTreeAction()
 {
 }
 
+// represents the action to append a child folder.
+class LibraryTreeAppendChildAction : public LibraryTreeAction
+{
+public:
+    LibraryTreeAppendChildAction(LibraryTreeItemIndex library_tree_index, const QString &title, LibraryTreeItemPromisePtr promise) : m_library_tree_index(library_tree_index), m_title(title), m_promise(promise) { }
+    virtual void execute(LibraryTreeItemPtr library_tree_root_item, LibraryTreeModel *model);
+private:
+    LibraryTreeItemIndex m_library_tree_index;
+    QString m_title;
+    LibraryTreeItemPromisePtr m_promise;
+};
+
 void LibraryTreeAppendChildAction::execute(LibraryTreeItemPtr library_tree_root_item, LibraryTreeModel *model)
 {
     LibraryTreeItemPtr parent = m_library_tree_index.resolve(library_tree_root_item);
@@ -57,6 +69,17 @@ void LibraryTreeAppendChildAction::execute(LibraryTreeItemPtr library_tree_root_
     parent->appendChild(item);
     model->endInsertRows();
 }
+
+// represents the action to append a media file.
+class LibraryTreeAppendMediaFile : public LibraryTreeAction
+{
+public:
+    LibraryTreeAppendMediaFile(LibraryTreeItemIndex library_tree_index, MediaFilePtr media_file) : m_library_tree_index(library_tree_index), m_media_file(media_file) { }
+    virtual void execute(LibraryTreeItemPtr library_tree_root_item, LibraryTreeModel *model);
+private:
+    LibraryTreeItemIndex m_library_tree_index;
+    MediaFilePtr m_media_file;
+};
 
 void LibraryTreeAppendMediaFile::execute(LibraryTreeItemPtr library_tree_root_item, LibraryTreeModel *model)
 {

@@ -6,13 +6,22 @@
 #include <QIcon>
 #include "MediaFile.h"
 
-class MediaFile;
-typedef boost::shared_ptr<MediaFile> MediaFilePtr;
+typedef boost::shared_ptr<class MediaFile> MediaFilePtr;
 
-// also gives access to the media metadata (icon or audio info).
-// this class may return a proxy object. if a proxy object
-// is returned, the mediaLoaded signal will be triggered when
-// the real object becomes available.
+// the media loader is created by a specific media list model such
+// as the music list model or the photo list model. it facilitates
+// calculating icons and reading audio meta data in a thread.
+
+// the media list model will invoke methods on this class to request
+// icons or meta data. this class can then limit the number
+// of threads and resources used to load icons and meta data.
+
+// the media list models should also connect to the media loaded
+// signal since the icon or meta data may initially be a proxy.
+// the media loaded signal is triggered when the real object becomes
+// available.
+
+typedef boost::shared_ptr<class MediaLoader> MediaLoaderPtr;
 
 class MediaLoader : public QObject
 {
@@ -32,7 +41,5 @@ Q_SIGNALS:
 
 private:
 };
-
-typedef boost::shared_ptr<MediaLoader> MediaLoaderPtr;
 
 #endif // MEDIA_BROWSER_MEDIA_LOADER_H

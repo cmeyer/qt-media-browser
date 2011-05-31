@@ -5,11 +5,9 @@
 #include <QModelIndex>
 #include <QMutex>
 
-class LibraryTreeItem;
-typedef boost::shared_ptr<LibraryTreeItem> LibraryTreeItemPtr;
+typedef boost::shared_ptr<class LibraryTreeItem> LibraryTreeItemPtr;
 
-class MediaFile;
-typedef boost::shared_ptr<MediaFile> MediaFilePtr;
+typedef boost::shared_ptr<class MediaFile> MediaFilePtr;
 
 typedef boost::shared_ptr<class LibraryTreeItemPromise> LibraryTreeItemPromisePtr;
 
@@ -32,10 +30,9 @@ private:
 };
 
 // the library tree action represents a change to the live tree. the live tree
-// can be synced to the display tree by replaying the actions. replaying the actions
-// is a fast operation and can be done on the user interface thread at which time
-// the list of actions representing the difference between the live and display tree
-// will be cleared.
+// can be synced to the display tree by replaying actions. replaying the actions
+// is fast and can be done on the user interface thread after which the list of
+// actions representing the difference between the live and display tree will be cleared.
 
 class LibraryTreeAction
 {
@@ -48,33 +45,12 @@ public:
 typedef boost::shared_ptr<LibraryTreeAction> LibraryTreeActionPtr;
 typedef std::list<LibraryTreeActionPtr> LibraryTreeActionList;
 
-// represents the action to append a child folder.
-class LibraryTreeAppendChildAction : public LibraryTreeAction
-{
-public:
-    LibraryTreeAppendChildAction(LibraryTreeItemIndex library_tree_index, const QString &title, LibraryTreeItemPromisePtr promise) : m_library_tree_index(library_tree_index), m_title(title), m_promise(promise) { }
-    virtual void execute(LibraryTreeItemPtr library_tree_root_item, LibraryTreeModel *model);
-private:
-    LibraryTreeItemIndex m_library_tree_index;
-    QString m_title;
-    LibraryTreeItemPromisePtr m_promise;
-};
-
-// represents the action to append a media file.
-class LibraryTreeAppendMediaFile : public LibraryTreeAction
-{
-public:
-    LibraryTreeAppendMediaFile(LibraryTreeItemIndex library_tree_index, MediaFilePtr media_file) : m_library_tree_index(library_tree_index), m_media_file(media_file) { }
-    virtual void execute(LibraryTreeItemPtr library_tree_root_item, LibraryTreeModel *model);
-private:
-    LibraryTreeItemIndex m_library_tree_index;
-    MediaFilePtr m_media_file;
-};
-
 // all changes that parsers make to the library tree should go through this controller.
 // changes are made immediately to the live tree and are thread safe. the sync method will
 // synchronize from the live tree to the display tree. it is a fast operation and needs to
 // be done from the user interface thread.
+
+typedef boost::shared_ptr<class LibraryTreeController> LibraryTreeControllerPtr;
 
 class LibraryTreeController : public boost::enable_shared_from_this<LibraryTreeController>
 {
@@ -119,7 +95,5 @@ private:
     // the owner. used while syncing.
     LibraryTreeModel *m_library_tree_model;
 };
-
-typedef boost::shared_ptr<LibraryTreeController> LibraryTreeControllerPtr;
 
 #endif // MEDIA_BROWSER_LIBRARY_TREE_CONTROLLER_H

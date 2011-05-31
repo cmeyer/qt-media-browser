@@ -3,9 +3,10 @@
 
 #include "FolderParser.h"
 
-class ApertureLibraryParserThread;
+typedef boost::shared_ptr<class ApertureLibraryParserThread> ApertureLibraryParserThreadPtr;
 
 // parses an Aperture library located at file_path and adds nodes to library tree controller
+
 class ApertureLibraryParser : public MediaParser
 {
 public:

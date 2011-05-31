@@ -126,7 +126,6 @@ void iPhotoLibraryParserThread::run()
 }
 
 iPhotoLibraryParser::iPhotoLibraryParser(LibraryTreeControllerPtr library_tree_controller, const QString &file_path, const QString &display_name)
-        : MediaParser(library_tree_controller)
 {
     boost::shared_ptr<iPhotoLibraryParserThread> iphoto_library_parser_thread(new iPhotoLibraryParserThread(this, library_tree_controller, file_path, display_name));
     m_iphoto_library_parser_thread = iphoto_library_parser_thread;

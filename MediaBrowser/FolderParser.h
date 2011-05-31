@@ -11,6 +11,9 @@ class QString;
 typedef boost::shared_ptr<class LibraryTreeItem> LibraryTreeItemPtr;
 
 // parse a folder recursively. add all subfolders and images within each subfolder to the tree controller.
+// this class will parse lazily... that is when it encounters a folder that is nested two or more levels
+// deep, it will submit a promise to the library tree controller. the promise tells the library tree controller
+// how to populate that folder if the user opens it.
 
 class FolderParser : public MediaParser
 {
@@ -21,7 +24,7 @@ public:
     virtual void start();
     virtual void cancel();
 
-    // from FolderPromises
+    // this gets called from from a folder promise
     void createAndStart(LibraryTreeControllerPtr library_tree_controller, LibraryTreeItemPtr library_tree_item, const QString &file_path);
 
 protected:

@@ -9,7 +9,7 @@
 #include "TaskPool.h"
 #include "TaskGroup.h"
 
-class MediaLoader;
+// audio media file info encapsulates meta data about an audio file.
 
 class AudioMediaFileInfo
 {
@@ -28,19 +28,35 @@ private:
     unsigned m_duration;
 };
 
+// a media file represents a media file within a library tree item. it performs several bookkeeping
+// tasks such as loading icons and audio meta data.
+
+class MediaLoader;
+
+typedef boost::shared_ptr<class MediaFile> MediaFilePtr;
+typedef std::vector<MediaFilePtr> MediaFileArray;
+
 class MediaFile : public boost::enable_shared_from_this<MediaFile>
 {
 public:
     MediaFile(const QString &file_path, const QString &source);
 
     QString filePath() const;
-    QString resolvedFilePath() const;
+    QString resolvedFilePath() const;   // resolve any aliases and provide the true path.
     QString source() const;
 
     QIcon icon(const QSize &icon_size) const;
-    void loadIcon(MediaLoader *media_loader, MediaBrowserPrivate::TaskGroupPtr task_group);
 
     AudioMediaFileInfo audioInfo() const { return m_audio_info; }
+    
+    // if the callers have the icon, set it here. some libraries, such as iphoto, already
+    // have a thumbnail icon.
+    // TODO: implement this.
+    //void setIcon(const QIcon &icon);
+    
+    // if callers know the audio info at the time this media file is created, they can
+    // set it here to avoid having to parse it. some libraries, such as itunes, already
+    // have this information in their database.
     void setAudioInfo(const AudioMediaFileInfo &audio_info);
 
 private:
@@ -62,14 +78,14 @@ private:
     bool m_audio_info_loaded;
     void resetAudioInfo();
     void loadAudioInfo(MediaLoader *media_loader, MediaBrowserPrivate::TaskGroupPtr task_group);
+    void loadIcon(MediaLoader *media_loader, MediaBrowserPrivate::TaskGroupPtr task_group);
 
     friend class MediaFileIconThread;
     friend class MediaFileAudioInfoThread;
     friend class MediaLoader;
 };
 
-typedef boost::shared_ptr<MediaFile> MediaFilePtr;
-typedef std::vector<MediaFilePtr> MediaFileArray;
+// the media file task pool is a pool of tasks used for reading icons and audio meta data.
 
 // http://www.devarticles.com/c/a/Cplusplus/C-plus-plus-In-Theory-The-Singleton-Pattern-Part-I/1/
 class MediaFileTaskPool : public MediaBrowserPrivate::TaskPool

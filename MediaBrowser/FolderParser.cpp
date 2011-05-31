@@ -195,10 +195,9 @@ void FolderParserTask::run()
 }
 
 FolderParser::FolderParser(LibraryTreeControllerPtr library_tree_controller, const QString &file_path, const QString &display_name)
-    : MediaParser(library_tree_controller)
-    , m_folder_parser_task_group(new MediaBrowserPrivate::TaskGroup(FolderParserTaskPool::instance(), true))
+    : m_folder_parser_task_group(new MediaBrowserPrivate::TaskGroup(FolderParserTaskPool::instance(), true))
 {
-    MediaBrowserPrivate::TaskPtr folder_parser_task(new FolderParserTask(this, library_tree_controller, libraryTreeController()->liveRootLibraryTreeItem(), file_path, display_name));
+    MediaBrowserPrivate::TaskPtr folder_parser_task(new FolderParserTask(this, library_tree_controller, library_tree_controller->liveRootLibraryTreeItem(), file_path, display_name));
     m_folder_parser_task_group->addTask(folder_parser_task);
 }
 

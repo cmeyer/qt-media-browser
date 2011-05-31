@@ -15,6 +15,11 @@ typedef boost::shared_ptr<class LibraryTreeController> LibraryTreeControllerPtr;
 class LibraryTreeModel;
 class MediaListModel;
 
+// the media browser view is the view that gives a list of all libraries
+// and sub-folders of those libraries. it gets its data from the library
+// tree model. periodically, the sync method should be called to trigger
+// a synchronization from the live data to the display data.
+
 typedef boost::shared_ptr<class MediaParser> MediaParserPtr;
 
 class MediaBrowserView : public QWidget
@@ -32,7 +37,7 @@ protected:
     MediaListModel *mediaListModel() const { return m_media_list_model; }
 
     // subclasses will need this to construct the media parsers.
-    LibraryTreeControllerPtr libraryTreeController() { return m_library_tree_controller; }
+    LibraryTreeControllerPtr libraryTreeController() const { return m_library_tree_controller; }
 
     // the content view displays the contents of the currently selected tree item.
     // call this method in the constructor of a derived class.

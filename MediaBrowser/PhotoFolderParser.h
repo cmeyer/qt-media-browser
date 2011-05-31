@@ -3,6 +3,8 @@
 
 #include "FolderParser.h"
 
+// parse a photo folder.
+
 class PhotoFolderParser : public FolderParser
 {
 public:

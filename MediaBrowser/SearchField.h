@@ -4,6 +4,8 @@
 #include <QLineEdit>
 #include <QWindowsStyle>
 
+// a search field with rounded corners and prompt text.
+
 class SearchField : public QLineEdit
 {
     Q_OBJECT
