@@ -48,7 +48,6 @@ HEADERS += \
     PhotoBrowserView.h \
     PhotoFolderParser.h \
     PhotoListModel.h \
-    SharedFromThis.h \
     SearchField.h \
     TaskGroup.h \
     TaskPool.h \
