@@ -3,7 +3,7 @@
 
 #include "FolderParser.h"
 
-class iPhotoLibraryParserThread;
+typedef boost::shared_ptr<class iPhotoLibraryParserThread> iPhotoLibraryParserThreadPtr;
 
 class iPhotoLibraryParser : public MediaParser
 {
@@ -15,7 +15,7 @@ public:
     virtual void cancel();
 
 private:
-    boost::shared_ptr<iPhotoLibraryParserThread> m_iphoto_library_parser_thread;
+    iPhotoLibraryParserThreadPtr m_iphoto_library_parser_thread;
 
     friend class iPhotoLibraryParserThread;
 };

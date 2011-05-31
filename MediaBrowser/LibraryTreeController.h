@@ -34,6 +34,9 @@ private:
 // is fast and can be done on the user interface thread after which the list of
 // actions representing the difference between the live and display tree will be cleared.
 
+typedef boost::shared_ptr<class LibraryTreeAction> LibraryTreeActionPtr;
+typedef QList<LibraryTreeActionPtr> LibraryTreeActionList;
+
 class LibraryTreeAction
 {
 public:
@@ -41,9 +44,6 @@ public:
     virtual ~LibraryTreeAction();
     virtual void execute(LibraryTreeItemPtr library_tree_root_item, LibraryTreeModel *model) = 0;
 };
-
-typedef boost::shared_ptr<LibraryTreeAction> LibraryTreeActionPtr;
-typedef QList<LibraryTreeActionPtr> LibraryTreeActionList;
 
 // all changes that parsers make to the library tree should go through this controller.
 // changes are made immediately to the live tree and are thread safe. the sync method will

@@ -17,7 +17,7 @@ public:
     virtual void cancel();
 
 private:
-    boost::shared_ptr<ApertureLibraryParserThread> m_aperture_library_parser_thread;
+    ApertureLibraryParserThreadPtr m_aperture_library_parser_thread;
 
     friend class ApertureLibraryParserThread;
 };

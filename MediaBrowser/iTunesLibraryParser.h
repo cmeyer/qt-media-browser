@@ -3,7 +3,7 @@
 
 #include "FolderParser.h"
 
-class iTunesLibraryParserThread;
+typedef boost::shared_ptr<class iTunesLibraryParserThread> iTunesLibraryParserThreadPtr;
 
 class iTunesLibraryParser : public MediaParser
 {
@@ -15,7 +15,7 @@ public:
     virtual void cancel();
 
 private:
-    boost::shared_ptr<iTunesLibraryParserThread> m_itunes_library_parser_thread;
+    iTunesLibraryParserThreadPtr m_itunes_library_parser_thread;
 
     friend class iTunesLibraryParserThread;
 };

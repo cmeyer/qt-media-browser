@@ -4,6 +4,8 @@
 #include "TaskPool.h"
 
 namespace MediaBrowserPrivate {
+    
+typedef boost::shared_ptr<class TaskGroup> TaskGroupPtr;
 
 class TaskGroup // : boost::noncopyable, using Q_DISABLE_COPY instead
 {
@@ -24,8 +26,6 @@ private:
     TaskPool *m_task_pool;
     TaskList m_tasks;
 };
-
-typedef boost::shared_ptr<TaskGroup> TaskGroupPtr;
 
 } /* MediaBrowserPrivate */
 

@@ -139,7 +139,7 @@ void iTunesLibraryParserThread::run()
 
 iTunesLibraryParser::iTunesLibraryParser(LibraryTreeControllerPtr library_tree_controller, const QString &file_path, const QString &display_name)
 {
-    boost::shared_ptr<iTunesLibraryParserThread> itunes_library_parser_thread(new iTunesLibraryParserThread(this, library_tree_controller, file_path, display_name));
+    iTunesLibraryParserThreadPtr itunes_library_parser_thread(new iTunesLibraryParserThread(this, library_tree_controller, file_path, display_name));
     m_itunes_library_parser_thread = itunes_library_parser_thread;
 }
 
