@@ -5,11 +5,13 @@
 
 namespace MediaBrowserPrivate {
 
-class TaskGroup : boost::noncopyable
+class TaskGroup // : boost::noncopyable, using Q_DISABLE_COPY instead
 {
 public:
     TaskGroup(TaskPool *task_pool, bool delayed = false);
     ~TaskGroup();
+    
+    Q_DISABLE_COPY(TaskGroup)
 
     void start();
 

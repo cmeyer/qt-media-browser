@@ -82,7 +82,7 @@ namespace MediaBrowserPrivate {
 
         Q_FOREACH(TaskPtr task, tasks)
         {
-            std::deque<TaskPtr>::iterator iter = find(m_queue.begin(), m_queue.end(), task);
+            TaskQueue::iterator iter = qFind(m_queue.begin(), m_queue.end(), task);
 
             if (iter != m_queue.end())
             {
@@ -99,7 +99,7 @@ namespace MediaBrowserPrivate {
     {
         QMutexLocker lock(&m_queue_lock);
 
-        std::deque<TaskPtr>::iterator iter = find(m_queue.begin(), m_queue.end(), task);
+        TaskQueue::iterator iter = qFind(m_queue.begin(), m_queue.end(), task);
 
         if (iter != m_queue.end())
         {
@@ -134,8 +134,7 @@ namespace MediaBrowserPrivate {
                     continue;
                 }
 
-                next_task = m_queue.front();
-                m_queue.pop_front();
+                next_task = m_queue.dequeue();
 
                 if (next_task->cancelFlag())
                     next_task.reset();
@@ -171,7 +170,7 @@ namespace MediaBrowserPrivate {
 
             Q_FOREACH(TaskPtr task, tasks)
             {
-                std::deque<TaskPtr>::iterator iter = find(m_queue.begin(), m_queue.end(), task);
+                TaskQueue::iterator iter = qFind(m_queue.begin(), m_queue.end(), task);
 
                 if (iter != m_queue.end())
                 {

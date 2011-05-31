@@ -1,13 +1,13 @@
 #ifndef MEDIA_BROWSER_TASK_POOL_H
 #define MEDIA_BROWSER_TASK_POOL_H
 
-#include <boost/noncopyable.hpp>
 #include <boost/smart_ptr.hpp>
 
 #include <deque>
 
 #include <QList>
 #include <QMutex>
+#include <QQueue>
 #include <QThread>
 #include <QWaitCondition>
 
@@ -28,13 +28,19 @@ namespace MediaBrowserPrivate {
     typedef AutoMemoryPool ThreadInitializer;
     
     typedef boost::shared_ptr<class Task> TaskPtr;
-    typedef std::list<TaskPtr> TaskList;
+    typedef boost::shared_ptr<class Task const> ConstTaskPtr;
+    typedef QList<TaskPtr> TaskList;
+    typedef QList<ConstTaskPtr> ConstTaskList;
+    typedef QQueue<TaskPtr> TaskQueue;
+    typedef QQueue<ConstTaskPtr> ConstTaskQueue;
     
-    class Task : boost::noncopyable
+    class Task // : boost::noncopyable, using Q_DISABLE_COPY instead
     {
     public:
         Task() : m_cancel_flag(false), m_finished(false) { }
         virtual ~Task() { }
+        
+        Q_DISABLE_COPY(Task)
 
         virtual void run() = 0;
 
@@ -61,11 +67,13 @@ namespace MediaBrowserPrivate {
     
     typedef boost::shared_ptr<class TaskPool> TaskPoolPtr;
     
-    class TaskPool : boost::noncopyable
+    class TaskPool // : boost::noncopyable, using Q_DISABLE_COPY instead
     {
     public:
         TaskPool(unsigned thread_count);
         ~TaskPool();
+        
+        Q_DISABLE_COPY(TaskPool)
 
         void addTask(TaskPtr task);
 
@@ -83,7 +91,7 @@ namespace MediaBrowserPrivate {
         unsigned m_thread_count;
         unsigned m_break_count;
 
-        std::deque<TaskPtr> m_queue;
+        TaskQueue m_queue;
         QMutex m_queue_lock;
         QWaitCondition m_queue_condition;
         QList<QThread *> m_threads;
