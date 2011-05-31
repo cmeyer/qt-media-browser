@@ -1,3 +1,5 @@
+// Copyright 2011. LQ Graphics, Inc. and Chris Meyer. LGPL License. See LICENSE file.
+
 #ifndef MEDIA_BROWSER_LIBRARY_TREE_ITEM_H
 #define MEDIA_BROWSER_LIBRARY_TREE_ITEM_H
 

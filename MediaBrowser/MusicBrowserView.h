@@ -1,3 +1,5 @@
+// Copyright 2011. LQ Graphics, Inc. and Chris Meyer. LGPL License. See LICENSE file.
+
 #ifndef MEDIA_BROWSER_MUSIC_BROWSER_VIEW_H
 #define MEDIA_BROWSER_MUSIC_BROWSER_VIEW_H
 

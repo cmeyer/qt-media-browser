@@ -1,5 +1,6 @@
-#include "TaskPool.h"
+// Copyright 2011. LQ Graphics, Inc. and Chris Meyer. LGPL License. See LICENSE file.
 
+#include "TaskPool.h"
 
 #include <QQueue>
 #include <QMutex>
