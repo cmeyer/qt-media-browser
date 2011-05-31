@@ -1,6 +1,6 @@
 TEMPLATE = subdirs
 CONFIG += ordered
 SUBDIRS = \
-        taglib/taglib \
         MediaBrowser \
-        MediaBrowserViewer
+        MediaBrowserViewer \
+#       taglib/taglib

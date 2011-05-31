@@ -19,12 +19,12 @@ win32 {
         CONFIG(debug, debug|release) {
             LINKLIBS += \
                 ../MediaBrowser/debug/libMediaBrowser.a \
-                ../taglib/taglib/build/debug/libTagLib.a
+#                ../taglib/taglib/build/debug/libTagLib.a
         }
         CONFIG(release, debug|release) {
             LINKLIBS += \
                 ../MediaBrowser/release/libMediaBrowser.a \
-                ../taglib/taglib/build/release/libTagLib.a
+#                ../taglib/taglib/build/release/libTagLib.a
         }
         LINKLIBS += \
             "../QuickTime SDK/Libraries/QTMLClient.lib"
@@ -36,7 +36,7 @@ win32 {
             LINKLIBS += \
                 C:/QtMobility/lib/QtMultimediaKitd1.lib \
                 ../MediaBrowser/debug/MediaBrowserd.lib \
-                ../taglib/taglib/build/debug/TagLib.lib
+#                ../taglib/taglib/build/debug/TagLib.lib
             # See http://msdn.microsoft.com/en-us/library/aa267384%28VS.60%29.aspx?ppud=4
             # Use /MDd option Multithreaded using DLL (msvcrt.lib)
             QMAKE_LFLAGS += /VERBOSE:LIB /NODEFAULTLIB:libc.lib /NODEFAULTLIB:libcmt.lib /NODEFAULTLIB:libcd.lib /NODEFAULTLIB:libcmtd.lib /NODEFAULTLIB:msvcrt.lib /NODEFAULTLIB:msvcprt.lib
@@ -46,7 +46,7 @@ win32 {
             LINKLIBS += \
                 C:/QtMobility/lib/QtMultimediaKit1.lib \
                 ../MediaBrowser/release/MediaBrowser.lib \
-                ../taglib/taglib/build/release/TagLib.lib
+#                ../taglib/taglib/build/release/TagLib.lib
             # See http://msdn.microsoft.com/en-us/library/aa267384%28VS.60%29.aspx?ppud=4
             # Use /MD option Multithreaded using DLL (msvcrt.lib)
             QMAKE_LFLAGS += /NODEFAULTLIB:libc.lib /NODEFAULTLIB:libcmt.lib /NODEFAULTLIB:libcd.lib /NODEFAULTLIB:libcmtd.lib /NODEFAULTLIB:msvcrtd.lib /NODEFAULTLIB:msvcprtd.lib
@@ -89,8 +89,8 @@ macx {
     CONFIG(release, debug|release) {
         LINKLIBDIR = release
     }
-    LINKLIBS += \
-        ../taglib/taglib/build/$$LINKLIBDIR/libTagLib.a
+#    LINKLIBS += \
+#        ../taglib/taglib/build/$$LINKLIBDIR/libTagLib.a
     POST_TARGETDEPS += $$LINKLIBS
     LIBS += -F../MediaBrowser/build/lib -framework MediaBrowser -framework QtMultimediaKit
     LIBS += $$LINKLIBS -framework QuickTime -framework Carbon -framework Cocoa -framework CoreFoundation

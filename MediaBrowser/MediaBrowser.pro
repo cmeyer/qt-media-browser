@@ -6,7 +6,7 @@ TEMPLATE = lib
 CONFIG += no_keywords stl absolute_library_soname
 QT += xmlpatterns xml
 INCLUDEPATH += ../boost ..
-INCLUDEPATH += ../taglib/include
+# INCLUDEPATH += ../taglib/include
 DEPENDPATH += ../boost
 DEFINES += LQ_BUILD_QT=1
 
@@ -90,8 +90,8 @@ macx {
         LINKLIBDIR = release
     }
 
-    LINKLIBS += \
-        ../taglib/taglib/build/$$LINKLIBDIR/libTagLib.a
+#    LINKLIBS += \
+#        ../taglib/taglib/build/$$LINKLIBDIR/libTagLib.a
 
     LIBS += $$LINKLIBS -framework Cocoa
     LIBS += -framework QtMultimediaKit
