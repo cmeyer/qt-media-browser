@@ -44,7 +44,7 @@ unsigned LibraryTreeItem::row() const
 {
     if (m_parent)
     {
-        LibraryTreeItemArray::const_iterator iter = std::find(m_parent->m_children.begin(), m_parent->m_children.end(), shared_from_this());
+        LibraryTreeItemArray::const_iterator iter = qFind(m_parent->m_children, shared_from_this());
         if (iter != m_parent->m_children.end())
             return iter - m_parent->m_children.begin();
     }
@@ -63,7 +63,7 @@ void LibraryTreeItem::addMediaFile(MediaFilePtr media_file)
 
 unsigned LibraryTreeItem::indexOfMediaFile(MediaFilePtr media_file) const
 {
-    MediaFileArray::const_iterator iter = std::find(m_media_files.begin(), m_media_files.end(), media_file);
+    MediaFileArray::const_iterator iter = qFind(m_media_files, media_file);
     if (iter != m_media_files.end())
         return iter - m_media_files.begin();
     return INDEX_NOT_FOUND;

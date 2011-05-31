@@ -1,18 +1,18 @@
 #ifndef MEDIA_BROWSER_LIBRARY_TREE_ITEM_H
 #define MEDIA_BROWSER_LIBRARY_TREE_ITEM_H
 
-#include <vector>
 #include <boost/smart_ptr.hpp>
 #include <QString>
 #include <QVariant>
+#include <QVector>
 
 // forward definitions
 
 typedef boost::shared_ptr<class MediaFile> MediaFilePtr;
-typedef std::vector<MediaFilePtr> MediaFileArray;
+typedef QVector<MediaFilePtr> MediaFileArray;
 
 typedef boost::shared_ptr<class LibraryTreeItem> LibraryTreeItemPtr;
-typedef std::vector<LibraryTreeItemPtr> LibraryTreeItemArray;
+typedef QVector<LibraryTreeItemPtr> LibraryTreeItemArray;
 
 typedef boost::shared_ptr<class LibraryTreeController> LibraryTreeControllerPtr;
 

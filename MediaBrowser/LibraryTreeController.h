@@ -25,7 +25,7 @@ public:
     LibraryTreeItemPtr resolve(LibraryTreeItemPtr library_tree_root_item);
     QModelIndex resolve(LibraryTreeModel *model);
 private:
-    std::list<unsigned> m_index_list;
+    QList<unsigned> m_index_list;
     void buildIndex(LibraryTreeItemPtr library_tree_item);
 };
 
@@ -43,7 +43,7 @@ public:
 };
 
 typedef boost::shared_ptr<LibraryTreeAction> LibraryTreeActionPtr;
-typedef std::list<LibraryTreeActionPtr> LibraryTreeActionList;
+typedef QList<LibraryTreeActionPtr> LibraryTreeActionList;
 
 // all changes that parsers make to the library tree should go through this controller.
 // changes are made immediately to the live tree and are thread safe. the sync method will

@@ -6,6 +6,7 @@
 #include <QString>
 #include <QIcon>
 #include <QMutex>
+#include <QVector>
 #include "TaskPool.h"
 #include "TaskGroup.h"
 
@@ -34,7 +35,7 @@ private:
 class MediaLoader;
 
 typedef boost::shared_ptr<class MediaFile> MediaFilePtr;
-typedef std::vector<MediaFilePtr> MediaFileArray;
+typedef QVector<MediaFilePtr> MediaFileArray;
 
 class MediaFile : public boost::enable_shared_from_this<MediaFile>
 {
