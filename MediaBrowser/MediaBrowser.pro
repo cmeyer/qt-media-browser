@@ -8,7 +8,6 @@ QT += xmlpatterns xml
 INCLUDEPATH += ../boost ..
 # INCLUDEPATH += ../taglib/include
 DEPENDPATH += ../boost
-DEFINES += LQ_BUILD_QT=1
 
 CONFIG += debug_and_release build_all
 
@@ -78,8 +77,7 @@ macx {
 	DEFINES += TAGLIB_STATIC=1 # necessary to avoid linker errors
     DEFINES += USE_TAGLIB=0
 
-    DEFINES += MAC_OS_X_VERSION_MIN_REQUIRED=1040
-    #DEFINES += MAC_OS_X_VERSION_MAX_ALLOWED=1040
+    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.6
 
     CONFIG += lib_bundle
 
@@ -123,9 +121,7 @@ macx {
         OBJECTS_DIR = build/release/.obj
         DESTDIR = build/lib # same DESTDIR for both debug and release to get both versions in the same directory
         PRECOMPILED_HEADER = MediaBrowser_pch.h
-        QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.4
-        #QMAKE_MAC_SDK=/Developer/SDKs/MacOSX10.4u.sdk
-        CONFIG+=x86 ppc
+        CONFIG += x86 ppc x86_64
     }
 
     CONFIG(debug, debug|release) {
