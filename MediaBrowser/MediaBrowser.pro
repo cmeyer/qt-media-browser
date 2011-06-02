@@ -117,20 +117,6 @@ macx {
     QMAKE_CXXFLAGS += -x objective-c++
     QMAKE_CFLAGS += -x objective-c++
 
-    CONFIG(release, debug|release) {
-        OBJECTS_DIR = build/release/.obj
-        DESTDIR = build/lib # same DESTDIR for both debug and release to get both versions in the same directory
-        PRECOMPILED_HEADER = MediaBrowser_pch.h
-        CONFIG += x86 ppc x86_64
-    }
-
-    CONFIG(debug, debug|release) {
-        OBJECTS_DIR = build/debug/.obj
-        DESTDIR = build/lib # same DESTDIR for both debug and release to get both versions in the same directory
-        PRECOMPILED_HEADER = MediaBrowser_pch.h
-        CONFIG += precompile_header
-    }
-
     INCLUDEPATH += $$[QT_INSTALL_HEADERS]/QtMultimediaKit
     INCLUDEPATH += $$[QT_INSTALL_HEADERS]/QtMobility
 
