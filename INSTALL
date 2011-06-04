@@ -1,0 +1,46 @@
+#
+# Installation instructions for Mac OS. Follow the script below. Edit and choose lines where necessary!
+#
+
+# Mac OS build script
+
+# start in your desired parent directory and define paths to Qt and boost
+# don't have boost? see below.
+# don't have QtMultimediaKit? see below.
+DEVDIR=`pwd`
+QTDIR=__full_path_to_qt__
+BOOSTDIR=__full_path_to_boost__
+
+# grab the project from Google Code
+hg clone http://qt-media-browser.googlecode.com/hg/ MediaBrowserProject
+cd MediaBrowserProject
+
+# set up boost. choose one of these two lines. don't have boost? choose the 2nd line.
+ln -s $BOOSTDIR boost
+# svn co http://svn.boost.org/svn/boost/tags/release/Boost_1_46_1 boost
+
+# need QtMobility w/ multimedia module? start here.
+git clone git://gitorious.org/qt-mobility/qt-mobility.git qt-mobility
+pushd cd qt-mobility
+./configure -prefix $QTDIR -libdir $QTDIR/lib -modules multimedia -qmake-exec $QTDIR/bin/qmake
+make
+make install
+# sudo make install
+popd
+
+# configure installation directory
+echo "MBP_PREFIX = $QTDIR/lib" > config.pri
+
+# choose your build architectures by commenting in one of the lines
+echo "CONFIG += x86 ppc x86_64" >> config.pri
+# echo "CONFIG += x86 ppc" >> config.pri
+# echo "CONFIG += x86" >> config.pri
+
+# build MediaBrowserProject.
+$QTDIR/bin/qmake -r MediaBrowserProject.pro
+make
+make install
+# sudo make install
+
+# run MediaBrowserView
+open MediaBrowserViewer/build/debug/MediaBrowserViewer.app
