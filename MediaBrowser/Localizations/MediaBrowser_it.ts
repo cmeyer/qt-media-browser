@@ -98,7 +98,7 @@
     <message>
         <location filename="../iPhotoLibraryParser.cpp" line="123"/>
         <source>Rolls</source>
-        <translation type="unfinished"></translation>
+        <translation>Rullini</translation>
     </message>
 </context>
 </TS>
