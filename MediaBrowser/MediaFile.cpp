@@ -12,6 +12,7 @@
 #include <tag.h>
 #endif
 #if defined(Q_OS_MAC)
+#include <Cocoa/Cocoa.h>
 #include "MacUtility.h"
 #endif
 #include "TaskPool.h"

@@ -2,6 +2,7 @@
 
 #include <QDebug>
 #include <QDesktopServices>
+#include <QDrag>
 #include <QHBoxLayout>
 #include <QListView>
 #include <QMouseEvent>
