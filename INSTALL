@@ -20,6 +20,7 @@ ln -s $BOOSTDIR boost
 # svn co http://svn.boost.org/svn/boost/tags/release/Boost_1_46_1 boost
 
 # need QtMobility w/ multimedia module? start here.
+# NOTE: Not needed for Qt 5.
 git clone git://gitorious.org/qt-mobility/qt-mobility.git qt-mobility
 pushd cd qt-mobility
 ./configure -prefix $QTDIR -libdir $QTDIR/lib -modules multimedia -qmake-exec $QTDIR/bin/qmake
@@ -32,7 +33,8 @@ popd
 echo "MBP_PREFIX = $QTDIR/lib" > config.pri
 
 # choose your build architectures by commenting in one of the lines
-echo "CONFIG += x86 ppc x86_64" >> config.pri
+# leave it blank under Qt 5 for default architectures
+# echo "CONFIG += x86 ppc x86_64" >> config.pri
 # echo "CONFIG += x86 ppc" >> config.pri
 # echo "CONFIG += x86" >> config.pri
 
@@ -43,4 +45,5 @@ make install
 # sudo make install
 
 # run MediaBrowserView
+export DYLD_FRAMEWORK_PATH=$QTDIR/lib
 open MediaBrowserViewer/build/debug/MediaBrowserViewer.app
