@@ -4,7 +4,7 @@ include(../config.pri)
 
 TEMPLATE = lib
 CONFIG += no_keywords stl absolute_library_soname
-QT += xmlpatterns xml
+QT += multimedia multimediawidgets widgets xml xmlpatterns
 INCLUDEPATH += ../boost ..
 # INCLUDEPATH += ../taglib/include
 DEPENDPATH += ../boost
@@ -92,7 +92,6 @@ macx {
 #        ../taglib/taglib/build/$$LINKLIBDIR/libTagLib.a
 
     LIBS += $$LINKLIBS -framework Cocoa
-    LIBS += -framework QtMultimediaKit
 
     FRAMEWORK_HEADERS.version = Versions
     FRAMEWORK_HEADERS.files = MediaBrowser.h MediaBrowserView.h MusicBrowserView.h PhotoBrowserView.h
@@ -116,9 +115,6 @@ macx {
     QMAKE_CXXFLAGS_WARN_ON = -Wreturn-type -Wunused-variable
     QMAKE_CXXFLAGS += -x objective-c++
     QMAKE_CFLAGS += -x objective-c++
-
-    INCLUDEPATH += $$[QT_INSTALL_HEADERS]/QtMultimediaKit
-    INCLUDEPATH += $$[QT_INSTALL_HEADERS]/QtMobility
 
     target.path = $${MBP_PREFIX}
     INSTALLS += target
