@@ -211,7 +211,11 @@ void PhotoBrowserView::setCellSize(int size)
 void PhotoBrowserView::addMediaParsers()
 {
     {
+#if QT_VERSION >= 0x050000
+        MediaParserPtr folder_parser(new PhotoFolderParser(libraryTreeController(), QStandardPaths::writableLocation(QStandardPaths::PicturesLocation), QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)));
+#else // QT_VERSION >= 0x050000
         MediaParserPtr folder_parser(new PhotoFolderParser(libraryTreeController(), QDesktopServices::storageLocation(QDesktopServices::PicturesLocation), QDesktopServices::displayName(QDesktopServices::PicturesLocation)));
+#endif // QT_VERSION >= 0x050000
 
         folder_parser->start();
 

@@ -1,5 +1,7 @@
 # Copyright 2011. LQ Graphics, Inc. and Chris Meyer. LGPL License. See LICENSE file.
 
+# set Qt version in config.pri. Qt541 <-- update this to make it easy to search and find this comment.
+
 include(../config.pri)
 
 TEMPLATE = lib

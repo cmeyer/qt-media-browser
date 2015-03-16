@@ -4,7 +4,6 @@
 #define MEDIA_BROWSER_SEARCH_FIELD_H
 
 #include <QLineEdit>
-#include <QWindowsStyle>
 
 // a search field with rounded corners and prompt text.
 

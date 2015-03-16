@@ -8,6 +8,9 @@
 #include <QStyleOptionButton>
 #include <QTextStream>
 
+#if QT_VERSION < 0x050000
+#include <QWindowsStyle>
+
 // see http://developer.qt.nokia.com/faq/answer/how_can_i_avoid_drawing_the_focus_rect_on_my_buttons
 // see http://stackoverflow.com/questions/2588743/qt-4-6-qlineedit-style-how-do-i-style-the-gray-highlight-border-so-its-rounded
 
@@ -36,6 +39,7 @@ public:
         }
     }
 };
+#endif // QT_VERSION < 0x05000
 
 SearchField::SearchField(const QString &default_str, QWidget *parent)
     : QLineEdit(parent), m_default_str(default_str), m_state(SearchField::STATE_HIDDEN)
@@ -45,7 +49,9 @@ SearchField::SearchField(const QString &default_str, QWidget *parent)
     ss << "* QLineEdit { selection-color: white; border: 2px groove gray; border-radius: 10px; padding: 0px 20px 0px 20px; }";
     setStyleSheet(style_sheet);
 
+#if QT_VERSION < 0x05000
     setStyle(new NoFocusStyle());
+#endif // QT_VERSION < 0x05000
 
     connect(this, SIGNAL(textChanged(QString)), this, SLOT(textChanged(QString)));
 

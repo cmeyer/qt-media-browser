@@ -12,7 +12,6 @@
 #include <QSortFilterProxyModel>
 #include <QToolButton>
 #include <QTreeView>
-#include <QWindowsStyle>
 
 #include <QMediaPlayer>
 
@@ -139,7 +138,7 @@ void MusicBrowserView::selectionChanged(const QItemSelection &selected, const QI
     if (model_index_list.count() > 0)
     {
         QModelIndex first_index = m_proxy_music_list_model->mapToSource(model_index_list.at(0));
-        m_current_file_path = qVariantValue<QString>(m_music_list_model->data(first_index, MediaListModel::FullPathRole));
+        m_current_file_path = m_music_list_model->data(first_index, MediaListModel::FullPathRole).value<QString>();
         m_play_button->show();
     }
     else
@@ -183,7 +182,11 @@ void MusicBrowserView::playButtonPressed()
 void MusicBrowserView::addMediaParsers()
 {
     {
+#if QT_VERSION >= 0x050000
+        MediaParserPtr folder_parser(new MusicFolderParser(libraryTreeController(), QStandardPaths::writableLocation(QStandardPaths::MusicLocation), QStandardPaths::writableLocation(QStandardPaths::MusicLocation)));
+#else // QT_VERSION >= 0x050000
         MediaParserPtr folder_parser(new MusicFolderParser(libraryTreeController(), QDesktopServices::storageLocation(QDesktopServices::MusicLocation), QDesktopServices::displayName(QDesktopServices::MusicLocation)));
+#endif // QT_VERSION >= 0x050000
 
         folder_parser->start();
 
@@ -210,7 +213,11 @@ void MusicBrowserView::addMediaParsers()
     }
 
     {
+#if QT_VERSION >= 0x050000
+        QString path = QString("%1/Library/Sounds").arg(QStandardPaths::writableLocation(QStandardPaths::HomeLocation));
+#else // QT_VERSION >= 0x050000
         QString path = QString("%1/Library/Sounds").arg(QDesktopServices::storageLocation(QDesktopServices::HomeLocation));
+#endif // QT_VERSION >= 0x050000
 
         MediaParserPtr folder_parser(new MusicFolderParser(libraryTreeController(), path, tr("Sounds Folder")));
 
