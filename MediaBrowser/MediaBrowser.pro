@@ -79,7 +79,7 @@ macx {
 	DEFINES += TAGLIB_STATIC=1 # necessary to avoid linker errors
     DEFINES += USE_TAGLIB=0
 
-    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.6
+    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
 
     CONFIG += lib_bundle
 
@@ -118,8 +118,8 @@ macx {
     QMAKE_CXXFLAGS += -x objective-c++
     QMAKE_CFLAGS += -x objective-c++
 
-    target.path = $${MBP_PREFIX}
-    INSTALLS += target
+#    target.path = $${MBP_PREFIX}
+#    INSTALLS += target
 }
 
 win32 {
