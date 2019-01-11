@@ -72,7 +72,7 @@ QPixmap PhotoBrowserListView::renderToPixmap(const QModelIndexList &indexes, QRe
     pixmap.fill(Qt::transparent);
     QPainter painter(&pixmap);
     painter.setOpacity(0.5);
-    QStyleOptionViewItemV4 option = viewOptions();
+    QStyleOptionViewItem option = viewOptions();
     option.state |= QStyle::State_Selected;
     for (int j = 0; j < paintPairs.count(); ++j)
     {
